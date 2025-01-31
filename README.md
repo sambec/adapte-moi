@@ -79,12 +79,12 @@ Suivez ces étapes pour configurer le projet en local :
 ```
 /project-root
 ├── app/
-│   ├── __init__.py       # Initialisation de l'application Flask et des extensions
-│   ├── routes.py         # Routes de l'application
-│   ├── models.py         # Modèles de base de données
+│   ├── routes/           # Routes de l'application
+│   ├── models/           # Modèles de base de données
 │   ├── forms.py          # Formulaires Flask-WTF
 │   ├── static/           # CSS, JavaScript et images
 │   └── templates/        # Templates HTML
+│   └── utils/            # Boîte à outils
 ├── config.py             # Paramètres de configuration
 ├── run.py                # Point d'entrée de l'application
 ├── requirements.txt      # Dépendances du projet
