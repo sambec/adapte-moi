@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Adapte-moi si tu peux{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <button type="button" class="btn btn-primary">
+            <a href="{{ url_for('seconnecter') }}">Se connecter</a>
+        </button>
+        <div class="container">
+            <h1 class="logo">
+                <a href="{{ url_for('home') }}">🎥📚 Adapte-moi si tu peux</a>
+            </h1>
+            <nav class="nav">
+                <a href="{{ url_for('adaptation') }}">Qu'est-ce qu'une adaptation ?</a>
+                <a href="{{ url_for('top') }}">Les livres les plus recherchés</a>
+                <a href="{{ url_for('about') }}">À propos de cette application</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Adapte-moi si tu peux. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
