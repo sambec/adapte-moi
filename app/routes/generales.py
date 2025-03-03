@@ -1,5 +1,8 @@
 from ..app import app, db
 from flask import render_template, request, flash, redirect, url_for, abort
+from flask_login import login_user
+from ..models.forms import * # Assurez-vous que le chemin d'importation est correct
+
 
 # from ..models.formulaires import Recherche
 
@@ -12,9 +15,28 @@ def home():
 def about():
     return render_template("partials/about.html", title="À propos")
 
-@app.route("/seconnecter")
-def seconnecter():
-    return render_template("partials/seconnecter.html", title="Se connecter")
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Ajoutez ici la logique pour vérifier les informations d'identification de l'utilisateur
+        # Par exemple, vérifiez le prénom et le mot de passe dans la base de données
+        # Si les informations sont correctes, connectez l'utilisateur
+            flash('Connexion réussie !')
+            return redirect(url_for('home'))
+        # pass
+    return render_template("partials/login.html", title="Se connecter", form=form)
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        # Ajoutez ici la logique pour enregistrer le nouvel utilisateur dans la base de données
+        flash('Inscription réussie !')
+        return redirect(url_for('login'))
+    return render_template("partials/register.html", title="S'inscrire", form=form)
+
 
 @app.route("/adaptation")
 def adaptation():

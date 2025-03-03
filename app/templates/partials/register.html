@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Inscription - Adapte-moi{% endblock %}
+{% block title %}S'inscrire - Adapte-moi{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Créer un compte</h2>
+    <h2>Inscription</h2>
     <form method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            {{ form.username.label }} {{ form.username(class="form-control") }}
+            {{ form.prenom.label }} {{ form.prenom(class="form-control") }}
         </div>
         <div class="form-group">
             {{ form.password.label }} {{ form.password(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.confirm_password.label }} {{ form.confirm_password(class="form-control") }}
         </div>
         <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
     </form>

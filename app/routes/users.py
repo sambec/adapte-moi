@@ -16,10 +16,10 @@ def utilisateurs():
     return render_template("pages/utilisateurs.html", utilisateurs=utilisateurs, sous_titre="Tous les utilisateurs")
 
 
-@app.route("/utilisateur/<int:id>")
-def utilisateur_specifique(id):
-    utilisateur = db.session.execute("SELECT id, name, email FROM user WHERE id = :id", {"id": id}).fetchone()
-    if not utilisateur:
-        return render_template("pages/404.html"), 404
-    return render_template("pages/utilisateur.html", utilisateur=utilisateur, sous_titre=utilisateur.name)
+# @app.route("/utilisateur/<int:id>")
+# def utilisateur_specifique(id):
+#     utilisateur = db.session.execute("SELECT id, name, email FROM user WHERE id = :id", {"id": id}).fetchone()
+#     if not utilisateur:
+#         return render_template("pages/404.html"), 404
+#     return render_template("pages/utilisateur.html", utilisateur=utilisateur, sous_titre=utilisateur.name)
 
