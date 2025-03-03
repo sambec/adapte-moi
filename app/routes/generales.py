@@ -5,9 +5,8 @@ from flask import render_template, request, flash, redirect, url_for, abort
 
 
 @app.route("/")
-def accueil():
-    return redirect(url_for("index"))
-
+def home():
+    return render_template('index.html')
 
 
 
