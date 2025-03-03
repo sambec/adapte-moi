@@ -39,7 +39,7 @@ class Film(db.Model):
     director = db.Column(db.Text)
     release_year = db.Column(db.Date)
     genres = db.Column(db.Text)
-    rating = db.Column(db.Real)
+    rating = db.Column(db.Float)
     id_imdb = db.Column(db.Text)
     id_wikidata = db.Column(db.Text)
     url_wikidata = db.Column(db.Text)
