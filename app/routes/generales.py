@@ -4,10 +4,6 @@ from flask import render_template, request, flash, redirect, url_for, abort
 # from ..models.formulaires import Recherche
 
 
-# @app.route("/")
-# def home():
-#     return render_template('index.html')
-
 @app.route("/")
 def home():
     return render_template("partials/index.html")
@@ -16,6 +12,17 @@ def home():
 def about():
     return render_template("partials/about.html", title="À propos")
 
+@app.route("/seconnecter")
+def seconnecter():
+    return render_template("partials/seconnecter.html", title="Se connecter")
+
+@app.route("/adaptation")
+def adaptation():
+    return render_template("partials/adaptation.html", title="Qu'est ce qu'une adaptation")
+
+@app.route("/top")
+def top():
+    return render_template("partials/top.html", title="Top")
 # -------------------- COLLECTIONS --------------------
 
 @app.route("/collections")

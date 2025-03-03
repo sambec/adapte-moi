@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion - Adapte-moi{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Connexion</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.prenom.label }} {{ form.prenom(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }} {{ form.password(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+    </form>
+    <p>Pas encore de compte ? <a href="{{ url_for('register') }}">Inscrivez-vous ici</a></p>
+</div>
+{% endblock %}
