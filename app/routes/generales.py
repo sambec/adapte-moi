@@ -10,7 +10,11 @@ from flask import render_template, request, flash, redirect, url_for, abort
 
 @app.route("/")
 def home():
-    return render_template("pages/index.html")
+    return render_template("partials/index.html")
+
+@app.route("/about")
+def about():
+    return render_template("partials/about.html", title="À propos")
 
 # -------------------- COLLECTIONS --------------------
 
