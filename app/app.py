@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
 from .config import Config
 
 # Initialisation de Flask
@@ -18,12 +18,11 @@ bootstrap = Bootstrap(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
+# Définition du user_loader après l'initialisation de login_manager
 @login_manager.user_loader
 def load_user(user_id):
-    from app.models.users import User  # Importation locale pour éviter les importations circulaires
+    from app.models.users import User  # Import local pour éviter l'import circulaire
     return User.query.get(int(user_id))
 
-# Importer les routes après l'init
-from app import routes  # Assurez-vous que 'routes' est le bon module à importer
-from app.routes.generales import *
-
+# 🚨 **IMPORTANT** : Importer les routes *SEULEMENT APRÈS* l'initialisation complète
+from app.routes import generales  # NE PAS IMPORTER "*" -> ça cause des erreurs d'import

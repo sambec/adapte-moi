@@ -62,6 +62,12 @@ class Users(db.Model, UserMixin):
     prenom = db.Column(db.Text, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)  # Stocke le hash
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)  # Vérifie le hash
+
     @staticmethod
     def identification(prenom, password):
         utilisateur = Users.query.filter(Users.prenom == prenom).first()
