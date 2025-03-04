@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from .config import Config
 
+
 # Initialisation de Flask
 app = Flask(
     __name__,

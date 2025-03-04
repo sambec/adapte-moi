@@ -5,7 +5,6 @@ from app import db  # Import direct après son initialisation dans app/__init__.
 from app.models.users import User  # Vérifie bien que ce modèle est défini
 from app.models.forms import LoginForm, RegisterForm  # Vérifie le bon chemin d'importation
 from app.routes.generales import generales_bp
-app.register_blueprint(generales_bp)
 
 
 # Création du Blueprint pour éviter d'utiliser directement `app`

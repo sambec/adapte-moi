@@ -1,4 +1,6 @@
-from ..app import app, db, login
+# from ..app import app, db, login
+from app import db
+from app.models import db  # Import the db instance
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_login import UserMixin
 from flask_login import UserMixin
@@ -8,7 +10,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
 from app.models import User
-from app.forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route("/register", methods=["GET", "POST"])
