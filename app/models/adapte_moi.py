@@ -1,4 +1,4 @@
-from ..app import app, db
+from app import app, db
 
 book_film = db.Table(
     "book_film",

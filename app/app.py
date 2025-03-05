@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
-from .config import Config
+from .config import Config #normalement pas de boucles infinies avec config donc tout va bien
 
 
 # Initialisation de Flask

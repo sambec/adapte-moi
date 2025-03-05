@@ -1,9 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-# Importation du modèle `User` depuis `users.py`
-from app.models.users import User
 
-# Assurez-vous que `db` est également importé et initialisé ici
-from app import db
-
-# Initialize the db instance
+# Supprime l'importation circulaire de `app`
 db = SQLAlchemy()
+
+from app import db  # Importer uniquement db et surtout pas user ici, on importe user dans models.users.py

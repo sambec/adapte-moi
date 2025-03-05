@@ -1,6 +1,6 @@
 # from ..app import app, db, login
-from app import db
-from app.models import db  # Import the db instance
+from app.models import db #on importe db depuis __init_.py
+# from app.models import db  # Import the db instance
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_login import UserMixin
 from flask_login import UserMixin
