@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Test route simple :</h2>
+    <p>
+        {{livre}}, écrit par {{auteur}}
+    </p>
+    <p>
+        <!-- {{livre}} écrit par {{auteur}} -->
+    </p>
+    <hr>
+    <h2>Test formulaire de recherche :</h2>
+    <form action="" method="POST">
+        <h2>chercher des titles de livres</h2>
+            <p>
+                <label for="title">Saisir le title du livre : </label>
+                <input type="text" name="title" id="title" required>
+                <input type="submit" value="cherche milou">
+            </p>
+    </form>
+    <p>
+        
+        {% if titres is not none %}
+                <p>Voici les livres trouvés</p>
+                <ul>
+                    {% for titre in titres %}
+                        <li>{{titre.title}}, écrit par {{titre.author}}. Id WIKIDATA: {{titre.id_wikidata}}</li>
+                    {% endfor %}
+                </ul>
+        {% else %}
+            <p>Aucun livre n'a été trouvé</p>
+        {% endif %}
+    </p>
+</body>
+</html>
