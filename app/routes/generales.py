@@ -2,7 +2,7 @@ from ..app import app, db
 from flask import render_template, request, flash, redirect, url_for, abort
 from flask_login import login_user
 from ..models.forms import * # Assurez-vous que le chemin d'importation est correct
-
+# from ..models.users import User
 
 # from ..models.formulaires import Recherche
 
@@ -32,10 +32,25 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        # Ajoutez ici la logique pour enregistrer le nouvel utilisateur dans la base de données
-        flash('Inscription réussie !')
-        return redirect(url_for('login'))
-    return render_template("partials/register.html", title="S'inscrire", form=form)
+        from ..models.users import User
+        # Vérifier si l'utilisateur existe déjà
+        existing_user = User.query.filter_by(prenom=form.prenom.data).first()
+        if existing_user:
+            flash("Cet email est déjà utilisé.", "danger")
+            return redirect(url_for("generales.register"))
+
+        # Création du nouvel utilisateur
+        new_user = User(
+            prenom=form.prenom.data,
+            password=form.password.data  # ⚠️ Remplacer par un hash sécurisé avant insertion !
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("Inscription réussie ! Vous pouvez vous connecter.", "success")
+        return redirect(url_for("generales.login"))
+
+    return render_template("pages/register.html", form=form)
 
 
 @app.route("/adaptation")

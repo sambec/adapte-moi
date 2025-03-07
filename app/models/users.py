@@ -6,9 +6,9 @@ from flask_login import UserMixin
 
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
-from app import app, db
-from app.models import User
-from app.forms import RegisterForm, LoginForm
+# from app import app, db
+# from app.models import User
+from forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route("/register", methods=["GET", "POST"])
@@ -19,7 +19,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        new_user = Users(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         flash("Compte créé avec succès !", "success")
@@ -34,7 +34,7 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = Users.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
             flash("Connexion réussie !", "success")

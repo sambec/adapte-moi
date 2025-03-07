@@ -24,6 +24,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Importer les routes après l'init
-from app import routes  # Assurez-vous que 'routes' est le bon module à importer
+# from app import routes  # Assurez-vous que 'routes' est le bon module à importer
 from app.routes.generales import *
 
