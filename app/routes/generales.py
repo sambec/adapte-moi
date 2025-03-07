@@ -1,62 +1,62 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash
-from app import db  # Import direct après son initialisation dans app/__init__.py
-from app.models.users import User  # Vérifie bien que ce modèle est défini
+from app.app import app, db  # Import direct après son initialisation dans app/__init__.py
+
 from app.models.forms import LoginForm, RegisterForm  # Vérifie le bon chemin d'importation
-from app.routes.generales import generales_bp
 
 
 # Création du Blueprint pour éviter d'utiliser directement `app`
-generales_bp = Blueprint("generales", __name__)
+# geen = Blueprint("generales", __name__)
 
 # -------------------- ROUTES PRINCIPALES --------------------
 
-@generales_bp.route("/")
+@app.route("/")
 def home():
     return render_template("partials/index.html")
 
-@generales_bp.route("/about")
+@app.route("/about")
 def about():
     return render_template("partials/about.html", title="À propos")
 
 # -------------------- AUTHENTIFICATION --------------------
 
-@generales_bp.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(prenom=form.prenom.data).first()
+        from app.models.users import User  # Vérifie bien que ce modèle est défini
+        user = User.query.filter_by(name=form.name.data).first()
         if user and check_password_hash(user.password, form.password.data):  # Sécurisé avec hashing
             login_user(user)
             flash("Connexion réussie !", "success")
             return redirect(url_for("generales.monprofil"))  # Utilisation du Blueprint
         else:
-            flash("Email ou mot de passe incorrect.", "danger")
+            flash("Prenom ou mot de passe incorrect.", "danger")
 
-    return render_template("pages/login.html", form=form)
+    return render_template("partials/login.html", form=form)
 
-@generales_bp.route("/logout")
+@app.route("/logout")
 @login_required
 def logout():
     logout_user()
     flash("Déconnexion réussie.", "info")
     return redirect(url_for("generales.login"))
 
-@generales_bp.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        from app.models.users import User  # Vérifie bien que ce modèle est défini
         # Vérifier si l'utilisateur existe déjà
-        existing_user = User.query.filter_by(email=form.email.data).first()
+        existing_user = User.query.filter_by(name=form.name.data).first()
         if existing_user:
-            flash("Cet email est déjà utilisé.", "danger")
+            flash("Ce name est déjà utilisé.", "danger")
             return redirect(url_for("generales.register"))
 
         # Création du nouvel utilisateur
         new_user = User(
-            prenom=form.prenom.data,
-            email=form.email.data,
+            name=form.name.data,
             password=form.password.data  # ⚠️ Remplacer par un hash sécurisé avant insertion !
         )
         db.session.add(new_user)
@@ -65,31 +65,31 @@ def register():
         flash("Inscription réussie ! Vous pouvez vous connecter.", "success")
         return redirect(url_for("generales.login"))
 
-    return render_template("pages/register.html", form=form)
+    return render_template("partials/register.html", form=form)
 
-@generales_bp.route("/monprofil")
+@app.route("/monprofil")
 @login_required
 def monprofil():
-    return render_template("pages/monprofil.html", user=current_user)
+    return render_template("partials/monprofil.html", user=current_user)
 
 # -------------------- AUTRES PAGES --------------------
 
-@generales_bp.route("/adaptation")
+@app.route("/adaptation")
 def adaptation():
     return render_template("partials/adaptation.html", title="Qu'est ce qu'une adaptation")
 
-@generales_bp.route("/top")
+@app.route("/top")
 def top():
     return render_template("partials/top.html", title="Top")
 
 # -------------------- COLLECTIONS --------------------
 
-@generales_bp.route("/collections")
+@app.route("/collections")
 def collections():
     collections = db.session.execute("SELECT id, title, user_id FROM collection").fetchall()
     return render_template("pages/collections.html", collections=collections, sous_titre="Toutes les collections")
 
-@generales_bp.route("/collection/<int:id>")
+@app.route("/collection/<int:id>")
 def collection_specifique(id):
     collection = db.session.execute(
         "SELECT id, title, user_id, description FROM collection WHERE id = :id", {"id": id}
@@ -108,12 +108,12 @@ def collection_specifique(id):
 
 # -------------------- LIVRES --------------------
 
-@generales_bp.route("/livres")
+@app.route("/livres")
 def livres():
     livres = db.session.execute("SELECT id, title, author FROM book").fetchall()
     return render_template("pages/livres.html", livres=livres, sous_titre="Tous les livres")
 
-@generales_bp.route("/livre/<string:id>")
+@app.route("/livre/<string:id>")
 def livre_specifique(id):
     livre = db.session.execute(
         "SELECT id, title, author FROM book WHERE id = :id", {"id": id}
@@ -132,12 +132,12 @@ def livre_specifique(id):
 
 # -------------------- FILMS --------------------
 
-@generales_bp.route("/films")
+@app.route("/films")
 def films():
     films = db.session.execute("SELECT id, title, director FROM film").fetchall()
     return render_template("pages/films.html", films=films, sous_titre="Tous les films")
 
-@generales_bp.route("/film/<string:id>")
+@app.route("/film/<string:id>")
 def film_specifique(id):
     film = db.session.execute(
         "SELECT id, title, director FROM film WHERE id = :id", {"id": id}

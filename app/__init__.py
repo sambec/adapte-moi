@@ -32,31 +32,31 @@
 
 #ici c'est pour initialiser l'application
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_bootstrap import Bootstrap
-from .config import Config
+# from flask import Flask
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_login import LoginManager
+# from flask_bootstrap import Bootstrap
+# from .config import Config
 
-# Initialisation des extensions (⚠️ Sans les attacher encore à app)
-db = SQLAlchemy()
-login_manager = LoginManager()
-bootstrap = Bootstrap()
+# # Initialisation des extensions (⚠️ Sans les attacher encore à app)
+# db = SQLAlchemy()
+# login_manager = LoginManager()
+# bootstrap = Bootstrap()
 
-def create_app():
-    """Créer et configurer l'application Flask"""
-    app = Flask(__name__)
-    app.config.from_object(Config)
+# def create_app():
+#     """Créer et configurer l'application Flask"""
+#     app = Flask(__name__)
+#     app.config.from_object(Config)
 
-    # Attacher les extensions à app
-    db.init_app(app)
-    login_manager.init_app(app)
-    bootstrap.init_app(app)
+#     # Attacher les extensions à app
+#     db.init_app(app)
+#     login_manager.init_app(app)
+#     bootstrap.init_app(app)
 
-    login_manager.login_view = "generales.login"
+#     login_manager.login_view = "generales.login"
 
-    # ⚠️ Importation des modèles et routes APRES l'initialisation de db
-    from app.routes.generales import generales_bp  
-    app.register_blueprint(generales_bp)
+#     # ⚠️ Importation des modèles et routes APRES l'initialisation de db
+#     from app.routes.generales import generales_bp  
+#     app.register_blueprint(generales_bp)
 
-    return app
+#     return app

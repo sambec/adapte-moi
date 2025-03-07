@@ -1,19 +1,19 @@
-from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort
+# from ..app import app, db
+# from flask import render_template, request, flash, redirect, url_for, abort
 
 # from ..models.formulaires import Recherche
 
 
-@app.route("/")
-def home():
-    return render_template('index.html')
+# @app.route("/")
+# def home():
+#     return render_template('index.html')
 
-# -------------------- UTILISATEURS --------------------
+# # -------------------- UTILISATEURS --------------------
 
-@app.route("/utilisateurs")
-def utilisateurs():
-    utilisateurs = db.session.execute("SELECT id, name, email FROM user").fetchall()
-    return render_template("pages/utilisateurs.html", utilisateurs=utilisateurs, sous_titre="Tous les utilisateurs")
+# @app.route("/utilisateurs")
+# def utilisateurs():
+#     utilisateurs = db.session.execute("SELECT id, name, email FROM user").fetchall()
+#     return render_template("pages/utilisateurs.html", utilisateurs=utilisateurs, sous_titre="Tous les utilisateurs")
 
 
 # @app.route("/utilisateur/<int:id>")

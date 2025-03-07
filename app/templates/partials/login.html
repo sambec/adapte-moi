@@ -8,8 +8,8 @@
     <form method="POST" action="{{ url_for('login') }}">
         {{ form.hidden_tag() }}
         
-        <label for="email">Email :</label>
-        {{ form.email(class="form-control") }}
+        <label for="name">Prénom :</label>
+        {{ form.name(class="form-control") }}
 
         <label for="password">Mot de passe :</label>
         {{ form.password(class="form-control") }}

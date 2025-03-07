@@ -17,13 +17,24 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 login_manager = LoginManager(app)
-login_manager.login_view = "login"
+login_manager.init_app(app)
+# login_manager.login_view = "login"
+
+# # ⚠️ Importation des modèles et routes APRES l'initialisation de db
+# from app.routes.generales import generales_bp  
+# app.register_blueprint(generales_bp)
 
 # Définition du user_loader après l'initialisation de login_manager
 @login_manager.user_loader
 def load_user(user_id):
-    from app.models.users import User  # Import local pour éviter l'import circulaire
-    return User.query.get(int(user_id))
+    from app.models.users import Users  # Import local pour éviter l'import circulaire
+    return Users.get(user_id)
+# @login_manager.user_loader
+# def load_user(user_id):
+#     from app.models.users import User  # Import local pour éviter l'import circulaire
+#     return User.query.get(int(user_id))
 
 # 🚨 **IMPORTANT** : Importer les routes *SEULEMENT APRÈS* l'initialisation complète
-from app.routes import generales  # NE PAS IMPORTER "*" -> ça cause des erreurs d'import
+from app.routes.generales import *
+
+
