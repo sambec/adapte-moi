@@ -67,10 +67,19 @@ def register():
 
     return render_template("partials/register.html", form=form)
 
+# @app.route("/monprofil")
+# @login_required
+# def monprofil():
+#     return render_template("partials/monprofil.html", user=current_user)
+
+# ici c'est un test pour afficher User
 @app.route("/monprofil")
-@login_required
 def monprofil():
-    return render_template("partials/monprofil.html", user=current_user)
+    books = []
+    from ..models.books import Book
+    for book in Book.query.all():
+        books.append(book.title)
+    return render_template("partials/monprofil.html", livres=books)
 
 # -------------------- AUTRES PAGES --------------------
 
