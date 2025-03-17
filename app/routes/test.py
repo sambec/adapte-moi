@@ -16,9 +16,19 @@ def test_book():
 def get_book(book_name):
     book = Book.query.filter_by(title=book_name).first()
     if book:
-        return render_template("pages/test.html", livre=book.title, auteur=book.author)
+        # return render_template("pages/test.html", livre=book.title, auteur=book.author)
+        return render_template("pages/livre.html", livre=book.title, auteur=book.author)
     else:
         return "Livre non trouvé", 404
+
+@app.route("/author/<string:author_name>")
+def get_author(author_name):
+    author = Book.query.filter_by(author=author_name).first()
+    if author:
+        # return render_template("pages/test.html", livre=book.title, auteur=book.author)
+        return render_template("pages/auteur.html", auteur=author.author)
+    else:
+        return "auteur non trouvé", 404
     
 @app.route("/recherche", methods=['GET', 'POST'])
 def recheche():
@@ -32,8 +42,8 @@ def recheche():
         else :
             titles = "rieng"
     else :
-        pass
-    return render_template("pages/test.html", titres=titles)
+        return render_template("pages/test.html", titres=titles)
+    return render_template("pages/index.html", titres=titles)
 
 @app.route("/test_movie")
 def test_movie():

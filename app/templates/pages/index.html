@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adapte-moi si tu peux - Recherche</title>
     <link rel="stylesheet" href="../../statics/style.css">
+    <!--JQUERY -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+          $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+              effect: "blind",
+              duration: 1000
+            },
+            hide: {
+              effect: "explode",
+              duration: 1000
+            }
+          });
+        
+          // Vérifiez le nombre d'enfants et ouvrez le dialogue si nécessaire
+          function checkAndOpenDialog() {
+            if ($("#dialog").children().length > 1) {
+              $("#dialog").dialog("open");
+            }
+          }
+        
+          // Appelez la fonction pour vérifier initialement
+          checkAndOpenDialog();
+        
+          // Vous pouvez également appeler cette fonction après avoir ajouté des enfants dynamiquement
+          // Exemple : $("#dialog").append("<p>Nouvel enfant</p>"); checkAndOpenDialog();
+        });
+        </script>
 </head>
 <body>
     <header class="header">
@@ -21,11 +53,31 @@
     <main class="main-content">
         <div class="container">
             <h2 class="title">Rechercher un livre adapté en film</h2>
-            <form action="/search" method="POST" class="search-form">
-                <input type="text" name="query" placeholder="Entrez le titre d'un livre..." required class="search-input">
+            <form action="" method="POST" class="search-form">
+                <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                 <button type="submit" class="search-button">🔍 Rechercher</button>
             </form>
-
+            <p id="dialog">
+        
+                {% if titres is not none %}
+                        <p>Voici les livres trouvés</p>
+                        <ul>
+                            {% for titre in titres %}
+                                <li><a href="/books/{{titre.title}}">{{titre.title}}</a>, écrit par <a href="/author/{{titre.author}}">{{titre.author}}</a>. Id WIKIDATA: {{titre.id_wikidata}}</li>
+                            {% endfor %}
+                        </ul>
+                {% else %}
+                    <p>Aucun livre n'a été trouvé</p>
+                {% endif %}
+            </p>
+            <!-- <form action="" method="POST">
+                <h2>chercher des titles de livres</h2>
+                    <p>
+                        <label for="title">Saisir le title du livre : </label>
+                        <input type="text" name="title" id="title" required>
+                        <input type="submit" value="cherche milou">
+                    </p>
+            </form> -->
             <div class="emoji-display">
                 <span class="emoji">📖</span>
                 <span class="emoji">➡️</span>
