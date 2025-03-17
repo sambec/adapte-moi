@@ -22,7 +22,22 @@
     <main class="main-content">
         <div class="container">
             <section class="info-section">
-                <h3>Résultats de la recherche :</h3>
+                <div>
+                    <h3>Résultats de la recherche :</h3>
+                    <p id="dialog">
+                        {% if titres is not none and titres|length >= 1 %}
+                                <p>Voici les livres trouvés</p>
+                                <ul>
+                                    {% for titre in titres %}
+                                        <li><a href="/book/{{titre.title}}">{{titre.title}}</a>, écrit par <a href="/author/{{titre.author}}">{{titre.author}}</a>. Id WIKIDATA: {{titre.id_wikidata}}</li>
+                                        <!-- <ul><ol><a href="https://www.wikidata.org/w/api.php?action=wbgetentities&ids={{titre.id_wikidata}}&format=json&props=sitelinks">Voir sur Wikipédia !!!</a></ol></ul> -->
+                                        {% endfor %}
+                                </ul>
+                        {% else %}
+                            <p>Aucun livre n'a été trouvé :(</p>
+                        {% endif %}
+                    </p>
+                </div>
                 <p>(listes de films correspondants au livre renseigné à venir)</p>
             </section>
         </div>
