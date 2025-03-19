@@ -12,6 +12,7 @@ from ..models.adapte_moi import Film, Book, film_book
 #         books.append(book.title)
 #     return render_template("pages/test.html", livres=books)
 
+# ROUTE SIMPLE pour récupérer les informations d'un seul livre
 @app.route("/book/<string:book_name>")
 def get_book(book_name):
     book = Book.query.filter_by(title=book_name).first()
@@ -20,6 +21,7 @@ def get_book(book_name):
     else:
         return "Livre non trouvé", 404
 
+# Route simple pour récupérer les informations d'un auteur
 @app.route("/author/<string:author_name>")
 def get_author(author_name):
     author = Book.query.filter_by(author=author_name).first()
@@ -27,7 +29,8 @@ def get_author(author_name):
         return render_template("pages/auteur.html", auteur=author.author)
     else:
         return "auteur non trouvé", 404
-    
+
+# Route search pour effectuer une recherche dans la BDD
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     titles = ""
@@ -68,12 +71,12 @@ def check_adaptation(id_book_):
     result = db.session.execute(stmt).fetchall()
     films = []
     for i in range(len(result)):
-        # print(result[i][0])
         id_t = result[i][0]
         films.append(Film.query.filter_by(id=id_t).first())
     if result:
         # return render_template("pages/resultatsrecherche.html", titres_film=films)
-        return f"*{films[0].title} * {result}"
+        # return f"*{films[0].title} * {result}"
+        return render_template("pages/resultats_adaptation.html", films=films)
     else:
         return "Aucun film trouvé pour ce livre", 404
 
