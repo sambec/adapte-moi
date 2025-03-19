@@ -1,7 +1,7 @@
 from ..app import app, db
 
-book_film = db.Table(
-    "book_film",
+film_book = db.Table(
+    "film_book",
     db.Column('id_film', db.Text, db.ForeignKey('Film.id')),
     db.Column('id_book', db.Text, db.ForeignKey('Book.id'))
 )
@@ -23,8 +23,8 @@ class Book(db.Model):
 
     film = db.relationship(
         'Film', 
-        secondary=book_film, 
-        backref='film'
+        secondary=film_book, 
+        backref=db.backref('books', lazy='dynamic')
         )
 
     def __repr__(self):
