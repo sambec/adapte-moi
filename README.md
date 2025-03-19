@@ -161,4 +161,3 @@ N’hésitez pas à explorer le projet et à contribuer ! 😊
 ---
 
 Profitez de votre exploration du monde des adaptations cinématographiques ! 🎬📖
-

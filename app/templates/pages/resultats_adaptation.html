@@ -25,13 +25,12 @@
                 <div>
                     <h3>Résultats de la recherche :</h3>
                     <div id="dialog">
-                        {% if titres is not none and titres|length >= 1 %}
-                                <p>Voici les livres trouvés :</p>
+                        {% if films is not none and films|length >= 1 %}
+                                <p>Voici les films trouvés :</p>
                                 <ul>
-                                    {% for titre in titres %}
-                                        <li><a href="/book/{{titre.title}}">{{titre.title}}</a>, écrit par <a href="/author/{{titre.author}}">{{titre.author}}</a>. Id WIKIDATA: {{titre.id_wikidata}}</li>
-                                        <!-- <ul><ol><a href="https://www.wikidata.org/w/api.php?action=wbgetentities&ids={{titre.id_wikidata}}&format=json&props=sitelinks">Voir sur Wikipédia !!!</a></ol></ul> -->
-                                        <ul><li><a href="/book_to_film/{{titre.id}}">adaptation ?</a></li></ul>
+                                    {% for film in films %}
+                                        <li><a href="">{{film.title}}</a>, écrit par <a href="">{{film.director}}</a>. ({{film.genres}}, {{film.release_year.strftime('%Y')}})</li>
+                                        
                                         {% endfor %}
                                 </ul>
                                 <div>
@@ -43,7 +42,7 @@
                                 </div>
 
                         {% else %}
-                            <p>Aucun livre n'a été trouvé :(</p>
+                            <p>Aucun film n'a été trouvé :(</p>
                             <h2 class="title">Rechercher un livre adapté en film</h2>
                             <form action="results" method="POST" class="search-form">
                                 <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}A propos - Adapte-moi si tu peux{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <section class="info-section">
+            <h3>Présentation du projet "Adapte-moi si tu peux !"</h3>
+            <h4>La raison d’être de cette application</h4>
+            <p>L’application "Adapte-moi si tu peux !" a été conçue pour répondre à un besoin spécifique des collégiens et lycéens français : faciliter l’accès aux adaptations cinématographiques des œuvres littéraires qu’ils doivent lire dans le cadre de leur scolarité. En proposant une plateforme intuitive et attractive, l’application vise à rendre la lecture obligatoire plus engageante en permettant aux élèves de découvrir des films basés sur les livres qu’ils étudient. Ce projet s’inscrit dans une démarche pédagogique, en offrant un outil moderne et interactif qui peut accompagner les jeunes dans leur parcours éducatif, tout en stimulant leur intérêt pour la littérature et le cinéma.</p>
+            
+            <h4>Les bases de données qui alimentent cet outil de recherche</h4>  
+            <p>Pour garantir la richesse et la fiabilité des informations proposées, l’application s’appuie sur plusieurs bases de données complémentaires. Les données relatives aux livres et à leurs adaptations cinématographiques sont moissonnées à partir de sources variées, telles que Wikidata, Data.gouv, et The MovieDataSet de Kaggle. Ces sources permettent de croiser des informations précises sur les œuvres littéraires, les films, leurs réalisateurs, et les liens entre les deux. Par exemple, Wikidata fournit des informations détaillées sur les livres et leurs auteurs, tandis que Kaggle permet d'accéder à des données sur l'évaluation des films. Ce croisement de données permet à l’application de proposer des résultats pertinents et complets.</p>
+           
+            <h4>La réalisation de cette application</h4> 
+            <p>L’application "Adapte-moi si tu peux !" est le fruit d’un travail collaboratif mené dans le cadre du cours de Python de la deuxième année de Master du parcours Archives TNAH (Technologies du numérique appliquées à l'Histoire) de l'Ecole nationale des Chartes. Ce projet a été réalisé en plusieurs étapes, allant de l’extraction et du nettoyage des données à la mise en place d’une base de données relationnelle SQLite, en passant par le développement d’un back-end en Python avec Flask et d’un front-end en HTML, CSS et JavaScript. L’équipe a également intégré des fonctionnalités avancées, comme la création de collections personnalisées pour les utilisateurs et la visualisation des données sous forme de graphiques. Ce projet reflète une volonté de combiner technologie et pédagogie pour offrir un outil innovant et utile aux jeunes lecteurs.</p>
+            
+            <p>L'équipe derrière l'application :</p>
+            <li><a href="https://github.com/sambec" >Sarah Ambec</a></li>
+            <li><a href="https://github.com/desireesdata" >Joël Féral</a></li>
+            <li><a href="https://github.com/camillesamsa" >Camille Samsa</a></li>
+            <li><a href="https://github.com/julietteterrien" >Juliette Terrien</a></li>
+
+            <p>Notre projet sur GitHub : <a href="https://github.com/sambec/adapte-moi">https://github.com/sambec/adapte-moi</a></p>
+        </section>
+    </div>
+{% endblock %}
