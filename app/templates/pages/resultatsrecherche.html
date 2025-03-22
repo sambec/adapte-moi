@@ -29,9 +29,9 @@
                                 <p>Voici les livres trouvés :</p>
                                 <ul>
                                     {% for titre in titres %}
-                                        <li><a href="/book/{{titre.title}}">{{titre.title}}</a>, écrit par <a href="/author/{{titre.author}}">{{titre.author}}</a>. Id WIKIDATA: {{titre.id_wikidata}}</li>
+                                        <li><a href="/book_to_film/{{titre.id}}">{{titre.title}}</a>, écrit par {{titre.author}}. Id WIKIDATA: {{titre.id_wikidata}}</li>
                                         <!-- <ul><ol><a href="https://www.wikidata.org/w/api.php?action=wbgetentities&ids={{titre.id_wikidata}}&format=json&props=sitelinks">Voir sur Wikipédia !!!</a></ol></ul> -->
-                                        <ul><li><a href="/book_to_film/{{titre.id}}">adaptation ?</a></li></ul>
+                                        
                                         {% endfor %}
                                 </ul>
                                 <div>
