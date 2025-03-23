@@ -23,7 +23,7 @@
         <div class="container">
             <section class="info-section">
                 <div>
-                    <h3>Résultats de la recherche :</h3>
+                    <h3>Résultats de la recherche</h3>
                     <div id="dialog">
                         {% if films is not none and films|length >= 1 %}
                                 <p>Voici les films trouvés :</p>
@@ -35,7 +35,7 @@
                                 </ul>
                                 <div>
                                     <h2 class="title">Rechercher un livre adapté en film</h2>
-                                    <form action="results" method="POST" class="search-form">
+                                    <form action="{{ url_for('results') }}" method="POST" class="search-form">
                                         <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                                         <button type="submit" class="search-button">🔍 Rechercher</button>
                                     </form>
@@ -44,14 +44,14 @@
                         {% else %}
                             <p>Aucun film n'a été trouvé :(</p>
                             <h2 class="title">Rechercher un livre adapté en film</h2>
-                            <form action="results" method="POST" class="search-form">
+                            <form action="{{ url_for('results') }}" method="POST" class="search-form">
                                 <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                                 <button type="submit" class="search-button">🔍 Rechercher</button>
                             </form> 
                         {% endif %}
                     </div>
                 </div>
-                <p>(listes de films correspondants au livre renseigné à venir)</p>
+               
             </section>
         </div>
     </main>
