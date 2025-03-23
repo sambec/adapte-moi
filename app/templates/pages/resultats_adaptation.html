@@ -27,28 +27,34 @@
                     <form action="results" method="POST" class="search-form">
                         <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                         <button type="submit" class="search-button">🔍 Rechercher</button>
-                    </form>
-                </div>
+                    </form> 
+                </div>           
                 <div>
-                    <h3>Résultats de la recherche :</h3>
+                    <h3>Adaptations</h3>
                     <div id="dialog">
-                        {% if titres is not none and titres|length >= 1 %}
-                                <p>Voici les livres trouvés :</p>
-                                <ul class="result_book">
-                                    {% for titre in titres %}
-                                        <p><i>{{titre.title}}</i>, écrit par {{titre.author}} ({{titre.publication_year.strftime('%Y')}}), <a href="{{titre.url_wikidata}}">{{titre.id_wikidata}}</a></p>
-                                        <!-- <ul><ol><a href="https://www.wikidata.org/w/api.php?action=wbgetentities&ids={{titre.id_wikidata}}&format=json&props=sitelinks">Voir sur Wikipédia !!!</a></ol></ul> -->
-                                        <ul><p><a href="/book_to_film/{{titre.id}}">Voir les adaptations</a></p></ul>
+                        {% if films is not none and films|length >= 1 %}
+                                <p>Voici les films trouvés :</p>
+                                <ul class="result_film">
+                                    {% for film in films %}
+                                        <p><i>{{film.title}}</i>, réalisé par {{film.director}} ({{film.genres}}, {{film.release_year.strftime('%Y')}}), <a href="{{film.url_wikidata}}">{{film.id_wikidata}}</a>
+                                            <span class="rating-indicator rating-{{ film.color }}"></span></li>
+                                        
                                     {% endfor %}
                                 </ul>
-
+                                <div class="legend">
+                                    <h4>Indice de recommandation :</h4>
+                                    <p><span class="rating-indicator rating-red"></span> Mauvais</p>
+                                    <p><span class="rating-indicator rating-orange"></span> Moyen</p>
+                                    <p><span class="rating-indicator rating-green"></span> Bon</p>
+                                    <p><span class="rating-indicator rating-gray"></span> Inconnu</p>
+                                </div>
                         {% else %}
                             <h2 class="title">Rechercher un livre adapté en film</h2>
                             <form action="results" method="POST" class="search-form">
                                 <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                                 <button type="submit" class="search-button">🔍 Rechercher</button>
                             </form> 
-                            <p>Aucun livre n'a été trouvé :(</p>
+                            <p>Aucun film n'a été trouvé :(</p>
                         {% endif %}
                     </div>
                 </div>
