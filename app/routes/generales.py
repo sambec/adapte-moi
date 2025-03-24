@@ -1,6 +1,7 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort
-
+from flask import render_template, request, flash, redirect, url_for, abort, jsonify
+from sqlalchemy import or_, select
+from ..models.adapte_moi import Film, Book, film_book
 # from ..models.formulaires import Recherche
 
 # GESTION ERREURS
@@ -31,9 +32,4 @@ def adaptation():
 @app.route("/top")
 @app.route("/top.html")
 def top():
-    # return app/statics/test.pyredirect(url_for("index"))
     return render_template("partials/top.html")
-
-
-
-
