@@ -12,14 +12,6 @@ from ..models.adapte_moi import Film, Book, film_book
 #         books.append(book.title)
 #     return render_template("pages/test.html", livres=books)
 
-
-@app.route("/livres")
-def pays(page=1):
-    return render_template("pages/livres.html", 
-        sous_titre="Livres", 
-        donnees= Book.query.order_by(Book.title).paginate(page=page, per_page=app.config["BOOK_PER_PAGE"]))
-
-
 # ROUTE SIMPLE pour récupérer les informations d'un seul livre
 @app.route("/book/<string:book_name>")
 def get_book(book_name):
@@ -29,7 +21,6 @@ def get_book(book_name):
     else:
         return "Livre non trouvé", 404
 
-
 # Route simple pour récupérer les informations d'un auteur
 @app.route("/author/<string:author_name>")
 def get_author(author_name):
@@ -38,7 +29,6 @@ def get_author(author_name):
         return render_template("pages/auteur.html", auteur=author.author)
     else:
         return "auteur non trouvé", 404
-
 
 # Route search pour effectuer une recherche dans la BDD
 @app.route("/search", methods=['GET', 'POST'])
@@ -57,7 +47,6 @@ def search():
         return render_template("pages/resultatsrecherche.html", titres=titles)
     return render_template("partials/index.html", titres=titles)
 
-
 @app.route("/results", methods=['GET', 'POST'])
 def results():
     titles = ""
@@ -74,7 +63,6 @@ def results():
         return render_template("pages/resultatsrecherche.html", titres=titles)
     return render_template("pages/resultatsrecherche.html", titres=titles)
 
-
 # ROUTE pour TESTER la TABLE DE RELATION
 @app.route("/book_to_film/<string:id_book_>")
 def check_adaptation(id_book_):
@@ -82,34 +70,19 @@ def check_adaptation(id_book_):
     stmt = select(film_book.c.id_film).where(film_book.c.id_book == id_book_)
     result = db.session.execute(stmt).fetchall()
     films = []
-    for row in result:
-        id_t = row[0]
-        film = Film.query.filter_by(id=id_t).first()
-        if film:
-            films.append({
-                "title" : film.title,
-                "director": film.director,
-                "genres": film.genres, 
-                "release_year": film.release_year, 
-                "url_wikidata": film.url_wikidata, 
-                "id_wikidata": film.id_wikidata,
-                "color": notation_film(film.rating)
-            })
-    if films:
+    for i in range(len(result)):
+        id_t = result[i][0]
+        films.append(Film.query.filter_by(id=id_t).first())
+    if result:
         # return render_template("pages/resultatsrecherche.html", titres_film=films)
         # return f"*{films[0].title} * {result}"
         return render_template("pages/resultats_adaptation.html", films=films)
     else:
         return "Aucun film trouvé pour ce livre", 404
 
-# Fonction pour indiquer une couleur pour chaque film selon sa note présente dans la base de données
-def notation_film(note_film):
-    if note_film is None:  # Dans le cas où la note n'est pas renseignée
-        return "gray"  # Couleur neutre pour films sans note
-    
-    if note_film <= 3.9:
-        return "red"
-    elif 4 <= note_film <= 6.9:
-        return "orange"
-    else:
-        return "green"
+# @app.route("/test_movie")
+# def test_movie():
+#     movies = []
+#     for movie in Film.query.all():
+#         movies.append(movie.title)
+#     return render_template("pages/test.html", films=movies)

@@ -23,41 +23,35 @@
         <div class="container">
             <section class="info-section">
                 <div>
-                    <h2 class="title">Rechercher un livre adapté en film</h2>
-                    <form action="results" method="POST" class="search-form">
-                        <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
-                        <button type="submit" class="search-button">🔍 Rechercher</button>
-                    </form> 
-                </div>           
-                <div>
-                    <h3>Adaptations</h3>
+                    <h3>Résultats de la recherche :</h3>
                     <div id="dialog">
                         {% if films is not none and films|length >= 1 %}
                                 <p>Voici les films trouvés :</p>
-                                <ul class="result_film">
+                                <ul>
                                     {% for film in films %}
-                                        <p><i>{{film.title}}</i>, réalisé par {{film.director}} ({{film.genres}}, {{film.release_year.strftime('%Y')}}), <a href="{{film.url_wikidata}}">{{film.id_wikidata}}</a>
-                                            <span class="rating-indicator rating-{{ film.color }}"></span></li>
+                                        <li><a href="">{{film.title}}</a>, écrit par <a href="">{{film.director}}</a>. ({{film.genres}}, {{film.release_year.strftime('%Y')}})</li>
                                         
-                                    {% endfor %}
+                                        {% endfor %}
                                 </ul>
-                                <div class="legend">
-                                    <h4>Indice de recommandation :</h4>
-                                    <p><span class="rating-indicator rating-red"></span> Mauvais</p>
-                                    <p><span class="rating-indicator rating-orange"></span> Moyen</p>
-                                    <p><span class="rating-indicator rating-green"></span> Bon</p>
-                                    <p><span class="rating-indicator rating-gray"></span> Inconnu</p>
+                                <div>
+                                    <h2 class="title">Rechercher un livre adapté en film</h2>
+                                    <form action="results" method="POST" class="search-form">
+                                        <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
+                                        <button type="submit" class="search-button">🔍 Rechercher</button>
+                                    </form>
                                 </div>
+
                         {% else %}
+                            <p>Aucun film n'a été trouvé :(</p>
                             <h2 class="title">Rechercher un livre adapté en film</h2>
                             <form action="results" method="POST" class="search-form">
                                 <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                                 <button type="submit" class="search-button">🔍 Rechercher</button>
                             </form> 
-                            <p>Aucun film n'a été trouvé :(</p>
                         {% endif %}
                     </div>
                 </div>
+                <p>(listes de films correspondants au livre renseigné à venir)</p>
             </section>
         </div>
     </main>
