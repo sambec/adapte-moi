@@ -73,7 +73,69 @@ Suivez ces étapes pour configurer le projet en local :
    ```
    - Ouvrez l'application dans votre navigateur à : [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
----
+
+
+## Configuration de l'environnement ⚙️
+
+Avant de lancer l'application, vous devez créer un fichier `.env` à la racine du projet et y ajouter les variables suivantes :
+
+```ini
+DEBUG=True
+SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite
+RESOURCES_PER_PAGE=10
+PAYS_PER_PAGE=10
+SQLALCHEMY_ECHO=False
+WTF_CSRF_ENABLE=True
+SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd
+```
+
+### Les commandes pour créer le fichier `.env` directement depuis le terminal :  
+
+Dans votre terminal, exécutez ces commandes :  
+
+#### Sous **Linux/macOS** :
+```bash
+echo "DEBUG=True
+SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite
+RESOURCES_PER_PAGE=10
+PAYS_PER_PAGE=10
+SQLALCHEMY_ECHO=False
+WTF_CSRF_ENABLE=True
+SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd" > .env
+```
+
+#### Sous **Windows (cmd)** :
+```cmd
+echo DEBUG=True > .env
+echo SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite >> .env
+echo RESOURCES_PER_PAGE=10 >> .env
+echo PAYS_PER_PAGE=10 >> .env
+echo SQLALCHEMY_ECHO=False >> .env
+echo WTF_CSRF_ENABLE=True >> .env
+echo SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd >> .env
+```
+
+#### Sous **Windows (PowerShell)** :
+```powershell
+@"
+DEBUG=True
+SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite
+RESOURCES_PER_PAGE=10
+PAYS_PER_PAGE=10
+SQLALCHEMY_ECHO=False
+WTF_CSRF_ENABLE=True
+SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd
+"@ | Out-File -Encoding utf8 .env
+```
+
+- **`DEBUG=True`** : Active le mode debug pour faciliter le développement.
+- **`SQLALCHEMY_DATABASE_URI`** : Chemin vers la base de données SQLite.
+- **`SECRET_KEY`** : Clé secrète pour Flask (modifiez-la pour des raisons de sécurité).
+- **Autres paramètres** : Ils définissent la pagination et le comportement de SQLAlchemy.
+
+⚠️ **Ne partagez pas votre fichier `.env` en ligne**, surtout si vous utilisez une base de données en production.
+
+
 
 ## Structure du projet 📂
 
