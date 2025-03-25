@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="header">
-        <button type="button" class="login-btn btn-primary">
+        <button type="button" class="btn btn-primary">
             <a href="{{ url_for('login') }}">Se connecter</a>
         </button>
         <div class="container">
@@ -18,7 +18,7 @@
             <nav class="nav">
                 <a href="{{ url_for('adaptation') }}">Qu'est-ce qu'une adaptation ?</a>
                 <a href="{{ url_for('top') }}">Les livres les plus recherchés</a>
-                <a href="{{ url_for('about') }}">À propos de cette application</a>
+               <a href="{{ url_for('about') }}">À propos de cette application</a>
             </nav>
         </div>
     </header>
@@ -33,6 +33,6 @@
         </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
 </body>
 </html>

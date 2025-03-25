@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adapte-moi si tu peux - Recherche</title>
+    <link rel="stylesheet" href="../../statics/style.css">
+</head>
+<body>
+    <header class="header">
+        <button type="button" class="btn btn-primary"><a href="seconnecter.html">Se connecter</a></button>
+        <div class="container">
+            <h1 class="logo"><a href="/">🎥📚 Adapte-moi si tu peux</a></h1>
+            <nav class="nav">
+                <a href="adaptation.html">Qu'est ce qu'une adaptation ?</a>
+                <a href="top.html">Les livres les plus recherchés</a>
+                <a href="about.html">A propos de cette application</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="info-section">
+                <div>
+                    <h3>Résultats de la recherche :</h3>
+                    <div id="dialog">
+                        {% if films is not none and films|length >= 1 %}
+                                <p>Voici les films trouvés :</p>
+                                <ul>
+                                    {% for film in films %}
+                                        <li><a href="">{{film.title}}</a>, écrit par <a href="">{{film.director}}</a>. ({{film.genres}}, {{film.release_year.strftime('%Y')}})</li>
+                                        
+                                        {% endfor %}
+                                </ul>
+                                <div>
+                                    <h2 class="title">Rechercher un livre adapté en film</h2>
+                                    <form action="results" method="POST" class="search-form">
+                                        <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
+                                        <button type="submit" class="search-button">🔍 Rechercher</button>
+                                    </form>
+                                </div>
+
+                        {% else %}
+                            <p>Aucun film n'a été trouvé :(</p>
+                            <h2 class="title">Rechercher un livre adapté en film</h2>
+                            <form action="results" method="POST" class="search-form">
+                                <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
+                                <button type="submit" class="search-button">🔍 Rechercher</button>
+                            </form> 
+                        {% endif %}
+                    </div>
+                </div>
+                <p>(listes de films correspondants au livre renseigné à venir)</p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Adapte-moi si tu peux. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

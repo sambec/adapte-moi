@@ -1,14 +1,17 @@
-# Custom
-.vscode/
-
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
+tmp/
+
+.env
+
+
+# C extensions 
 *.so
+*- Copie*
+*_clean_init*
 
 # Distribution / packaging
 .Python
