@@ -63,17 +63,19 @@ def results():
     titles = ""
     if request.method == "POST":
         donnees = request.form
-        print(donnees)
+        # print(donnees)
         my_title = donnees.get("title")
         if my_title:
             titles = Book.query.filter(Book.title.like(f"%{my_title}%")).all()
+            # Si silence (la recherche de titre de livre ne donne rien) alors on checke chez les auteurs
+            if len(titles) == 0:
+                titles = Book.query.filter(Book.author.like(f"%{my_title}%")).all()
         else :
             # à tester/modifier
             titles = "rieng"
     else :
         return render_template("pages/resultatsrecherche.html", titres=titles)
     return render_template("pages/resultatsrecherche.html", titres=titles)
-
 
 # ROUTE pour TESTER la TABLE DE RELATION
 @app.route("/book_to_film/<string:id_book_>")
