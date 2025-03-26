@@ -8,9 +8,9 @@ sqlite_cursor = sqlite_conn.cursor()
 
 # Connexion à la base de données MySQL
 mysql_config = {
-    'user': 'bob',
-    'password': 'mdp',
-    # 'host': 'billy',
+    'user': 'sambec',
+    'password': 'adapte-moisitupeux!',
+    'host': 'sambec.mysql.pythonanywhere-services.com',
     'database': 'adapte_moi'
 }
 mysql_conn = mysql.connector.connect(**mysql_config)
