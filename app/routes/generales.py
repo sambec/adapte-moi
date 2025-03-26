@@ -73,9 +73,6 @@ def create_figure():
 
     return fig
 
-@app.route("/about")
-def about():
-    return render_template("partials/about.html", title="À propos")
 
 # -------------------- AUTHENTIFICATION --------------------
 

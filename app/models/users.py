@@ -4,13 +4,13 @@ from ..app import app, db, login
 
 # class Users(UserMixin, db.Model):
 
-class Users(db.Model):
+# class Users(db.Model):
 
-    __tablename__ = "users"
+#     __tablename__ = "users"
 
-    id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True, autoincrement=True)
-    prenom = db.Column(db.Text, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+#     id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True, autoincrement=True)
+#     prenom = db.Column(db.Text, nullable=False)
+#     password = db.Column(db.String(100), nullable=False)
 
     # @staticmethod
     # def identification(prenom, password):
