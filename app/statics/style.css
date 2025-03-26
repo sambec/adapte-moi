@@ -439,3 +439,58 @@ img:hover {
     text-decoration: underline;
 }
 
+/* LIST BOOKS */
+.list_books p {
+    background-color: #FEEBB3;
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 2px 2px 2px #E3E3E3;
+}
+
+/* LIST FILMS */
+.list_films p {
+    background-color: #FEEBB3;
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 2px 2px 2px #E3E3E3;
+}
+.emoji-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.circle-btn {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: glow 2s infinite alternate ease-in-out;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.8); }
+    100% { box-shadow: 0 0 15px rgba(255, 204, 0, 1); }
+}
+
+.book-btn {
+    background-color: #FEEBB3; /* Jaune clair */
+    color: #4D7F96; /* Bleu profond */
+}
+
+.film-btn {
+    background-color: #F28B66; /* Orange pétillant */
+    color: white;
+}
+
+.circle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}

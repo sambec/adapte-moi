@@ -149,3 +149,20 @@ def random_book():
         })
     else:
         return jsonify({"error": "No book found"}), 404
+
+# Afficher la liste des livres présents dans la base de données
+@app.route('/index-books')
+def list_books():
+    page = request.args.get('page', 1, type=int)
+    per_page = 20  # Nombre de livres par page
+    books_paginated = Book.query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return render_template('partials/index-books.html', books=books_paginated)
+
+@app.route('/index-films')
+def list_films():
+    page = request.args.get('page', 1, type=int)
+    per_page = 20  # Nombre de livres par page
+    films_paginated = Film.query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return render_template('partials/index-films.html', films=films_paginated)
