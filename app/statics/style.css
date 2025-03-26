@@ -78,7 +78,10 @@ a:hover {
 
 /* BOUTONS */
 .btn {
-    background-color: #007bff;
+    position: absolute;
+    top: 15px;
+    right: 20px; 
+    background-color: #F28B66;
     color: #fff;
     border: 1px solid #fff;
     padding: 8px 15px;
@@ -86,7 +89,15 @@ a:hover {
     cursor: pointer;
     border-radius: 5px;
     text-decoration: none;
+    text-align: right;
 }
+
+.btn btn-primary {
+    position: absolute;
+    top: 15px;
+    right: 20px; 
+}
+
 
 .login-btn {
     position: absolute;
@@ -230,12 +241,13 @@ img:hover {
 
 /* INFO SECTION */
 .info-section {
-    margin: 30px 0;
+    margin: 10px 0;
     text-align: left;
 }
 
 .info-section h2 {
     text-align: center;
+    font-size: 2rem;
 }
 
 .info-section h3 {
@@ -362,3 +374,68 @@ img:hover {
     align-items: center;
     margin-top: 10px;
 }
+/* Centering everything */
+.gif-container {
+    position: relative;
+    text-align: center;
+    margin: 40px auto;
+}
+
+/* Styling the GIF */
+.clickable-gif {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover effect on the GIF */
+.clickable-gif:hover {
+    transform: scale(1.1);
+}
+
+/* Sparkles around the GIF */
+.sparkles {
+    font-size: 2rem;
+    color: gold;
+    /* position: absolute;
+    width: 100%;
+    top: -20px;
+    left: 0; */
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none; /* So it doesn’t interfere with clicking */
+    animation: blink-sparkles 1.5s infinite alternate ease-in-out;
+}
+
+/* Blinking effect for sparkles */
+@keyframes blink-sparkles {
+    0% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0.2; transform: scale(1); }
+}
+
+.result-box {
+    background-color: #FEEBB3;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.book-link {
+    color: #F28B66;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.book-link:hover {
+    color: #9AC9C1;
+    text-decoration: underline;
+}
+

@@ -2,6 +2,7 @@ from ..app import app, db
 from flask import render_template, request, flash, redirect, url_for, jsonify, request
 from sqlalchemy import or_, select
 from ..models.adapte_moi import Film, Book, film_book
+import random
 # from ..models.formulaires import Recherche
 # from ..utils.transformations import nettoyage_string_to_int, clean_arg
 
@@ -56,6 +57,22 @@ def search():
     else :
         return render_template("pages/resultatsrecherche.html", titres=titles)
     return render_template("partials/index.html", titres=titles)
+
+@app.route("/book_to_film/results", methods=['GET', 'POST'])
+def search_adaptations():
+    titles = ""
+    if request.method == "POST":
+        donnees = request.form
+        print(donnees)
+        my_title = donnees.get("title")
+        if my_title:
+            titles = Book.query.filter(Book.title.like(f"%{my_title}%")).all()
+        else :
+            # à tester/modifier
+            titles = "rieng"
+    else :
+        return render_template("pages/resultatsrecherche.html", titres=titles)
+    return render_template("pages/resultatsrecherche.html", titres=titles)
 
 
 @app.route("/results", methods=['GET', 'POST'])
@@ -113,3 +130,22 @@ def notation_film(note_film):
         return "orange"
     else:
         return "green"
+    
+
+@app.route("/random_book")
+def random_book():
+    book_count = Book.query.count()
+    if book_count == 0:
+        return jsonify({"error": "No books found"}), 404
+
+    random_offset = random.randint(0, book_count - 1)
+    random_book = Book.query.offset(random_offset).first()
+
+    if random_book:
+        return jsonify({
+            "id": random_book.id,  # Add the book ID here
+            "title": random_book.title,
+            "author": random_book.author
+        })
+    else:
+        return jsonify({"error": "No book found"}), 404

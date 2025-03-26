@@ -3,10 +3,10 @@ from flask import render_template, request, flash, redirect, url_for, abort, Fla
 from collections import Counter
 # from ..models.formulaires import Recherche
 
-# @app.route("/login")
-# def login():
-#     # return app/statics/test.pyredirect(url_for("index"))
-#     return render_template("partials/index.html")
+@app.route("/login")
+def login():
+    # return app/statics/test.pyredirect(url_for("index"))
+    return render_template("partials/index.html")
 
 # @app.route('/user/<int:user_id>/radar-data')
 # def radar_data(user_id):
