@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adapte-moi si tu peux - Recherche</title>
+    <link rel="stylesheet" href="../../statics/style.css">
+</head>
+<body>
+    <header class="header">
+        <button type="button" class="btn btn-primary"><a href="seconnecter.html">Se connecter</a></button>
+        <div class="container">
+            <h1 class="logo"><a href="/">🎥📚 Adapte-moi si tu peux</a></h1>
+            <nav class="nav">
+                <a href="adaptation.html">Qu'est ce qu'une adaptation ?</a>
+                <a href="top.html">Les livres les plus recherchés</a>
+                <a href="about.html">A propos de cette application</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="info-section">
+                <div>
+                    <h2 class="title">Liste des livres adaptés au cinéma</h2>
+                    <div id="dialog">
+                        <ul class="list_books">
+                            {% for book in books.items %}
+                                <p><i>{{book.title}}</i>, écrit par {{book.author}} ({{book.publication_year.strftime('%Y') if book.publication_year else 'N/A'}}), <a href="{{book.url_wikidata}}">{{book.id_wikidata}}</a><br><a href="/book_to_film/{{book.id}}">Voir les adaptations</a></p>                                                                    
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    </br>
+                    <div>
+                        {% if books.has_prev %}
+                            <a href="{{ url_for('list_books', page=books.prev_num) }}">Précédent</a>
+                        {% endif %}
+                        Page {{ books.page }} / {{ books.pages }}
+                        {% if books.has_next %}
+                            <a href="{{ url_for('list_books', page=books.next_num) }}">Suivant</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Adapte-moi si tu peux. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
