@@ -22,6 +22,7 @@ def page_not_found(error):
 @app.route("/index")
 @app.route("/index.html")
 @app.route("/accueil")
+@app.route("/home")
 def home():
     # return app/statics/test.pyredirect(url_for("index"))
     return render_template("partials/index.html")
