@@ -7,8 +7,24 @@
 <div class="container">
     <section class="info-section">
         <h3>Bienvenue sur votre profil !</h3>
-        <p>(Gestion du profil ici et joli graphique)</p>
         <a href="{{ url_for('deconnexion') }}" class="btn btn-danger">Se déconnecter</a>
     </section>
+
+    <div>
+        <h4>Ma collection de films</h4>
+        {% if films %}
+        <ul>
+            {% for film in films %}
+                <li>
+                    {{ film.title }}
+                    
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Votre collection est vide.</p>
+    {% endif %}
+    </div>
 </div>
 {% endblock %}

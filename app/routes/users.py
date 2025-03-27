@@ -1,5 +1,5 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort
+from flask import render_template, request, flash, redirect, url_for, abort, session
 from ..models.users import Users
 from ..models.adapte_moi import Film, Collection
 from ..models.formulaires import AjoutUtilisateur, Connexion
@@ -76,9 +76,20 @@ def deconnexion():
 
 login.login_view = 'connexion'
 
-@app.route("/utilisateurs/profil", methods=["POST", "GET"])
-def profil():
-    return render_template("partials/monprofil.html")
+# GESTION COLLECTION DE FILMS
+@app.route('/profil')
+@app.route('/collection')
+@login_required
+def afficher_collection():
+    # Récupérer les films de la collection de l'utilisateur connecté
+    films_dans_collection = (
+        db.session.query(Film)
+        .join(Collection, Film.id == Collection.film_id)
+        .filter(Collection.user_id == current_user.id)
+        .all()
+    )
+    return render_template('partials/monprofil.html', films=films_dans_collection)
+
 
 @app.route("/ajouter_collection/<string:film_id>")
 @login_required
@@ -98,5 +109,4 @@ def ajouter_collection(film_id):
     else:
         flash('Film non trouvé.', 'error')
         print('Film non trouvé.', 'error')
-    # return redirect(url_for('afficher_collection'))
-    return ":)"
+    return redirect(url_for('afficher_collection'))

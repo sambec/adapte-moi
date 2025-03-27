@@ -98,6 +98,8 @@ def check_adaptation(id_book_):
                 "id_wikidata": film.id_wikidata,
                 "color": notation_film(film.rating)
             })
+        else :
+            return "Aucun film trouvé pour ce livre", 404
     if films:
         # return render_template("pages/resultatsrecherche.html", titres_film=films)
         # return f"*{films[0].title} * {result}"
