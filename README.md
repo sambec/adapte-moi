@@ -43,7 +43,7 @@ Voici un aperçu de l'application :
 Suivez ces étapes pour configurer le projet en local :
 
 ### Prérequis :
-- Python 3.7+
+- Python 3.6+
 - Environnement virtuel (recommandé)
 
 ### Étapes :
@@ -69,7 +69,7 @@ Suivez ces étapes pour configurer le projet en local :
    ```
 5. **Lancez l'application :**
    ```bash
-   flask run
+   python run.py
    ```
    - Ouvrez l'application dans votre navigateur à : [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
@@ -81,9 +81,9 @@ Avant de lancer l'application, vous devez créer un fichier `.env` à la racine 
 
 ```ini
 DEBUG=True
-SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite
-RESOURCES_PER_PAGE=10
-PAYS_PER_PAGE=10
+SQLALCHEMY_DATABASE_URI=sqlite:////adapte_moi.sqlite
+BOOKS_PER_PAGE=20
+FILMS_PER_PAGE=20
 SQLALCHEMY_ECHO=False
 WTF_CSRF_ENABLE=True
 SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd
@@ -96,9 +96,9 @@ Dans votre terminal, exécutez ces commandes :
 #### Sous **Linux/macOS** :
 ```bash
 echo "DEBUG=True
-SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite
-RESOURCES_PER_PAGE=10
-PAYS_PER_PAGE=10
+SQLALCHEMY_DATABASE_URI=sqlite:////adapte_moi.sqlite
+BOOKS_PER_PAGE=20
+FILMS_PER_PAGE=20
 SQLALCHEMY_ECHO=False
 WTF_CSRF_ENABLE=True
 SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd" > .env
@@ -107,9 +107,9 @@ SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd" > .env
 #### Sous **Windows (cmd)** :
 ```cmd
 echo DEBUG=True > .env
-echo SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite >> .env
-echo RESOURCES_PER_PAGE=10 >> .env
-echo PAYS_PER_PAGE=10 >> .env
+echo SQLALCHEMY_DATABASE_URI=sqlite:///C:\\adapte_moi.sqlite >> .env
+BOOKS_PER_PAGE=20 >> .env
+FILMS_PER_PAGE=20 >> .env
 echo SQLALCHEMY_ECHO=False >> .env
 echo WTF_CSRF_ENABLE=True >> .env
 echo SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd >> .env
@@ -119,9 +119,9 @@ echo SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd >> .env
 ```powershell
 @"
 DEBUG=True
-SQLALCHEMY_DATABASE_URI=sqlite:///adapte_moi.sqlite
-RESOURCES_PER_PAGE=10
-PAYS_PER_PAGE=10
+SQLALCHEMY_DATABASE_URI=sqlite:///C:\\adapte_moi.sqlite
+BOOKS_PER_PAGE=20
+FILMS_PER_PAGE=20
 SQLALCHEMY_ECHO=False
 WTF_CSRF_ENABLE=True
 SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd

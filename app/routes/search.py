@@ -1,65 +1,19 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, jsonify, request
-from sqlalchemy import or_, select
+from flask import render_template, request, jsonify
+from sqlalchemy import select
 from ..models.adapte_moi import Film, Book, film_book
-# from ..models.formulaires import Recherche
-# from ..utils.transformations import nettoyage_string_to_int, clean_arg
-
-# @app.route("/test_book")
-# def test_book():
-#     books = []
-#     for book in Book.query.all():
-#         books.append(book.title)
-#     return render_template("pages/test.html", livres=books)
+import random
 
 
-@app.route("/livres")
-def pays(page=1):
-    return render_template("pages/livres.html", 
-        sous_titre="Livres", 
-        donnees= Book.query.order_by(Book.title).paginate(page=page, per_page=app.config["BOOK_PER_PAGE"]))
-
-
-# ROUTE SIMPLE pour récupérer les informations d'un seul livre
-@app.route("/book/<string:book_name>")
-def get_book(book_name):
-    book = Book.query.filter_by(title=book_name).first()
-    if book:
-        return render_template("pages/livre.html", livre=book.title, auteur=book.author)
-    else:
-        return "Livre non trouvé", 404
-
-
-# Route simple pour récupérer les informations d'un auteur
-@app.route("/author/<string:author_name>")
-def get_author(author_name):
-    author = Book.query.filter_by(author=author_name).first()
-    if author:
-        return render_template("pages/auteur.html", auteur=author.author)
-    else:
-        return "auteur non trouvé", 404
-
-
-# Route search pour effectuer une recherche dans la BDD
-@app.route("/search", methods=['GET', 'POST'])
-def search():
-    titles = ""
-    if request.method == "POST":
-        donnees = request.form
-        # print(donnees)
-        my_title = donnees.get("title")
-        if my_title:
-            titles = Book.query.filter(Book.title.like(f"%{my_title}%")).all()
-        else :
-            titles = "rieng"
-            # return render_template("partials/index.html", titres=titles)
-    else :
-        return render_template("pages/resultatsrecherche.html", titres=titles)
-    return render_template("partials/index.html", titres=titles)
-
-
+# ROUTE POUR AFFICHER LES RÉSULTATS DE LA RECHERCHE
 @app.route("/results", methods=['GET', 'POST'])
 def results():
+    """Fonction qui permet d'afficher les résultats de la recherche effectuée par l'utilisateur à partir de la page d'accueil.
+
+    Returns
+    -------
+    Retourne les résultats de la recherche selon le template resultatsrecherche.html
+    """
     titles = ""
     if request.method == "POST":
         donnees = request.form
@@ -75,9 +29,20 @@ def results():
     return render_template("pages/resultatsrecherche.html", titres=titles)
 
 
-# ROUTE pour TESTER la TABLE DE RELATION
+# ROUTE POUR AFFICHER LES ADAPTATIONS D'UN LIVRE
 @app.route("/book_to_film/<string:id_book_>")
 def check_adaptation(id_book_):
+    """Fonction qui permet de vérifier les adaptations d'un livre en film.
+
+    Parameters
+    ----------
+        id_book: str, required
+            L'identifiant du livre
+
+    Returns
+    -------
+        Retourne les adaptations cinématographiques liés à l'identifiant d'un livre.
+    """
     # Créer une requête pour interroger directement la table de relation book_film
     stmt = select(film_book.c.id_film).where(film_book.c.id_book == id_book_)
     result = db.session.execute(stmt).fetchall()
@@ -96,16 +61,24 @@ def check_adaptation(id_book_):
                 "color": notation_film(film.rating)
             })
     if films:
-        # return render_template("pages/resultatsrecherche.html", titres_film=films)
-        # return f"*{films[0].title} * {result}"
         return render_template("pages/resultats_adaptation.html", films=films)
     else:
         return "Aucun film trouvé pour ce livre", 404
 
-# Fonction pour indiquer une couleur pour chaque film selon sa note présente dans la base de données
 def notation_film(note_film):
-    if note_film is None:  # Dans le cas où la note n'est pas renseignée
-        return "gray"  # Couleur neutre pour films sans note
+    """Fonction qui permet d'associer une couleur pour chaque film selon les données de notation présentes dans la base de données.
+
+    Parameters
+    ----------
+        note_film : float, required 
+            Paramètre requis pour la fonction, il est nécessaire de renseigner la note d'un film pour utiliser cette fonction.
+
+    Returns
+    -------
+        La fonction retourne nécessairement une couleur, si la note d'un film n'est pas renseignée la couleur sera grise.
+    """
+    if note_film is None:
+        return "gray"
     
     if note_film <= 3.9:
         return "red"
@@ -113,3 +86,78 @@ def notation_film(note_film):
         return "orange"
     else:
         return "green"
+
+
+# ROUTE POUR AFFICHER LES ADAPTATIONS D'UN LIVRE À PARTIR DE LA ROUTE /book_to_film/<string:id_book_>
+@app.route("/book_to_film/results", methods=['GET', 'POST'])
+def search_adaptations():
+    titles = ""
+    if request.method == "POST":
+        donnees = request.form
+        print(donnees)
+        my_title = donnees.get("title")
+        if my_title:
+            titles = Book.query.filter(Book.title.like(f"%{my_title}%")).all()
+        else :
+            # à tester/modifier
+            titles = "rieng"
+    else :
+        return render_template("pages/resultatsrecherche.html", titres=titles)
+    return render_template("pages/resultatsrecherche.html", titres=titles)
+
+
+# ROUTE POUR AFFICHER UN LIVRE DE FAÇON ALÉATOIRE
+@app.route("/random_book")
+def random_book():
+    """Fonction qui permet d'afficher un livre de façon aléatoire.
+
+    Returns
+    -------
+    L'identifiant du livre avec son titre et son auteur de façon aléatoire, sinon retourne une erreur 404 "No book found".
+    """
+    book_count = Book.query.count()
+    if book_count == 0:
+        return jsonify({"error": "No books found"}), 404
+
+    random_offset = random.randint(0, book_count - 1)
+    random_book = Book.query.offset(random_offset).first()
+
+    if random_book:
+        return jsonify({
+            "id": random_book.id,
+            "title": random_book.title,
+            "author": random_book.author
+        })
+    else:
+        return jsonify({"error": "No book found"}), 404
+
+
+# ROUTE POUR AFFICHER LA LISTE DES LIVRES DE LA BASE DE DONNÉES
+@app.route('/index-books')
+def list_books():
+    """Fonction qui permet d'afficher la liste des livres présents dans la base de données.
+
+    Returns
+    -------
+    Retourne la liste des livres selon le template index-books.html
+    """
+    page = request.args.get('page', 1, type=int) # numéro de page à afficher, la liste des livres commence à la page 1 par défaut
+    books_paginated = Book.query.paginate(page=page, per_page=app.config["BOOKS_PER_PAGE"], error_out=False)
+    
+    return render_template('partials/index-books.html', books=books_paginated)
+
+
+# ROUTE POUR AFFICHER LA LISTE DES FILMS DE LA BASE DE DONNÉES
+@app.route('/index-films')
+def list_films():
+    """Fonction qui permet d'afficher la liste des films présents dans la base de données.
+
+    Returns
+    -------
+    Retourne la liste des films selon le template index-films.html
+
+    """
+    page = request.args.get('page', 1, type=int) # numéro de page à afficher, la liste des films commence à la page 1 par défaut
+    films_paginated = Film.query.paginate(page=page, per_page=app.config["FILMS_PER_PAGE"], error_out=False)
+    
+    return render_template('partials/index-films.html', films=films_paginated)

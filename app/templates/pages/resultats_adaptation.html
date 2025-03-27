@@ -10,11 +10,11 @@
     <header class="header">
         <button type="button" class="btn btn-primary"><a href="seconnecter.html">Se connecter</a></button>
         <div class="container">
-            <h1 class="logo"><a href="/">🎥📚 Adapte-moi si tu peux</a></h1>
+            <h1 class="logo"><center><a href="{{ url_for('home') }}">🎥 Adapte-moi si tu peux ! 📚</a></center></h1>
             <nav class="nav">
-                <a href="adaptation.html">Qu'est ce qu'une adaptation ?</a>
-                <a href="top.html">Les livres les plus recherchés</a>
-                <a href="about.html">A propos de cette application</a>
+                <a href="{{ url_for('adaptation') }}">Qu'est-ce qu'une adaptation ?</a>
+                <a href="{{ url_for('top') }}">Explorer les collections</a>
+               <a href="{{ url_for('about') }}">À propos de cette application</a>
             </nav>
         </div>
     </header>
@@ -27,7 +27,7 @@
                     <form action="results" method="POST" class="search-form">
                         <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                         <button type="submit" class="search-button">🔍 Rechercher</button>
-                    </form> 
+                    </form>
                 </div>           
                 <div>
                     <h3>Adaptations</h3>

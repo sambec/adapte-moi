@@ -1,23 +1,65 @@
 {% extends "base.html" %}
 
-{% block title %}Qu'est ce qu'une adaptation ? - Adapte-moi si tu peux{% endblock %}
+{% block title %}Qu'est-ce qu'une adaptation ? - Adapte-moi si tu peux{% endblock %}
 
 {% block content %}
 <div class="container">
     <section class="info-section">
-        <h3>Qu’est-ce qu’une adaptation ?</h3>
-        
-            <h4>L’adaptation d’une œuvre littéraire</h4>
-            <p>L’adaptation d’une œuvre littéraire au cinéma ou à la télévision est un processus qui consiste à transformer un récit écrit en une production visuelle. Cela implique de transposer les éléments narratifs, les personnages et les thèmes d’un livre dans un format audiovisuel, tout en respectant l’essence de l’œuvre originale. Selon une étude du Centre National du Livre (CNL) menée en 2023, près d’une production cinématographique ou audiovisuelle sur cinq sortie en France entre 2015 et 2021 est une adaptation d’un livre. Ce chiffre montre l’importance des œuvres littéraires comme source d’inspiration pour les créateurs de contenu visuel. Cependant, ce processus demande souvent des ajustements, car un film ou une série doit tenir compte de contraintes de durée et de format, ce qui peut nécessiter des coupes ou des réinterprétations par rapport au texte original.</p>
+        <h2 class="section-title">Qu’est-ce qu’une adaptation ?</h2>
+
+        <!-- Bloc Adaptation d’une œuvre littéraire -->
+        <div class="content-box">
+            <h3>L’adaptation d’une œuvre littéraire</h3>
+            <p>
+                L’adaptation d’une œuvre littéraire au cinéma ou à la télévision est un processus qui consiste à transformer 
+                un récit écrit en une production visuelle. Cela implique de transposer les éléments narratifs, les personnages 
+                et les thèmes d’un livre dans un format audiovisuel, tout en respectant l’essence de l’œuvre originale.
+            </p>
+            <div class="stat-box">
+                📊 Selon le Centre National du Livre (CNL), près d’une production audiovisuelle sur cinq en France entre 2015 et 2021 était une adaptation d’un livre.
+            </div>
+            <p>
+                Cependant, ce processus demande souvent des ajustements, car un film ou une série doit tenir compte de 
+                contraintes de durée et de format, ce qui peut nécessiter des coupes ou des réinterprétations par rapport 
+                au texte original.
+            </p>
             <img src="{{ url_for('plot_png') }}" alt="Graphique dynamique">
+        </div>
 
-            <h4>Les chiffres du cinéma sur les adaptations</h4>
-            <p>Les adaptations littéraires occupent une place significative dans l’industrie cinématographique et audiovisuelle. L’étude du CNL révèle que les adaptations représentent 20 % des films sortis en salles en France et 17 % des productions audiovisuelles (séries, téléfilms, etc.). Ces chiffres montrent que les adaptations ne sont pas seulement un phénomène marginal, mais une tendance majeure. Par exemple, entre 2015 et 2021, le volume d’adaptations en France a augmenté de 28 %, porté notamment par la demande croissante de contenus pour les plateformes de streaming. En termes de succès, les adaptations cinématographiques d’œuvres littéraires génèrent en moyenne plus d’entrées en salles que les autres films. Par exemple, 33 % des entrées en salles en France sont attribuées à des adaptations, et 37 % des films nominés aux Oscars sont basés sur des livres. Ces données soulignent l’impact économique et culturel des adaptations dans le paysage cinématographique.</p>
+        <!-- Bloc Les chiffres du cinéma -->
+        <div class="content-box">
+            <h3>Les chiffres du cinéma sur les adaptations</h3>
+            <p>
+                Les adaptations littéraires occupent une place significative dans l’industrie cinématographique et audiovisuelle. 
+                L’étude du CNL révèle que les adaptations représentent 20 % des films sortis en salles en France et 17 % des 
+                productions audiovisuelles (séries, téléfilms, etc.).
+            </p>
+            <div class="stat-box">
+                🎬 33 % des entrées en salles en France sont attribuées à des adaptations, et 37 % des films nominés aux Oscars sont basés sur des livres.
+            </div>
+            <p>
+                Entre 2015 et 2021, le volume d’adaptations en France a augmenté de 28 %, porté notamment par la demande 
+                croissante de contenus pour les plateformes de streaming.
+            </p>
             <img src="{{ url_for('wordcloud') }}" alt="Nuage de mots des genres de films">
+        </div>
 
-            <h4>Les liens du cinéma avec la littérature</h4>
-            <p>Le cinéma et la littérature entretiennent des liens étroits, chacun nourrissant l’autre de manière complémentaire. Les adaptations permettent de donner une nouvelle vie à des œuvres littéraires, en les rendant accessibles à un public plus large. Par exemple, des auteurs francophones comme Michel Bussi, Pierre Lemaitre ou Georges Simenon figurent parmi les plus adaptés en France, ce qui montre l’intérêt des producteurs pour les œuvres locales. En retour, les adaptations cinématographiques ou audiovisuelles peuvent stimuler les ventes des livres originaux. Selon l’étude du CNL, deux tiers des œuvres littéraires adaptées ont vu leurs ventes augmenter après la sortie de leur adaptation. Cela illustre un cercle vertueux où le cinéma et la littérature se renforcent mutuellement, tout en enrichissant le patrimoine culturel.</p>
-  
-        </section>
+        <!-- Bloc Les liens du cinéma avec la littérature -->
+        <div class="content-box">
+            <h3>Les liens du cinéma avec la littérature</h3>
+            <p>
+                Le cinéma et la littérature entretiennent des liens étroits, chacun nourrissant l’autre de manière complémentaire. 
+                Les adaptations permettent de donner une nouvelle vie à des œuvres littéraires, en les rendant accessibles à un 
+                public plus large.
+            </p>
+            <div class="stat-box">
+                📚 2/3 des œuvres littéraires adaptées ont vu leurs ventes augmenter après la sortie de leur adaptation.
+            </div>
+            <p>
+                Par exemple, des auteurs francophones comme Michel Bussi, Pierre Lemaitre ou Georges Simenon figurent parmi les 
+                plus adaptés en France, ce qui montre l’intérêt des producteurs pour les œuvres locales.
+            </p>
+        </div>
+    </section>
 </div>
 {% endblock %}

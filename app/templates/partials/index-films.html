@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Index films - Adapte-moi{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="info-section">
+        <div>
+            <h2 class="title">Liste des films adaptés de livres</h2>
+            <div id="dialog">
+                <ul class="list_films">
+                    {% for film in films.items %}   
+                    <p><i>{{film.title}}</i> réalisé par {{film.director}} en {{film.release_year.strftime('%Y')}} <a href="{{film.url_wikidata}}">{{film.id_wikidata}}</a><br></p>                                                                    
+                    {% endfor %}
+                </ul>
+            </div>
+            </br>
+            <div>
+                {% if films.has_prev %}
+                    <a href="{{ url_for('list_films', page=films.prev_num) }}">Précédent</a>
+                {% endif %}
+                Page {{ films.page }} / {{ films.pages }}
+                {% if films.has_next %}
+                    <a href="{{ url_for('list_films', page=films.next_num) }}">Suivant</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
