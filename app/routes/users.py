@@ -3,8 +3,7 @@ from flask import render_template, request, flash, redirect, url_for, abort, ses
 from ..models.users import Users
 from ..models.adapte_moi import Film, Collection
 from ..models.formulaires import AjoutUtilisateur, Connexion
-from flask_login import login_user, current_user, logout_user, login_required
-
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 # @app.route("/login")
 # def login():
@@ -26,9 +25,8 @@ def register():
         )
         if statut is True:
             flash("Hop, un nouvel utilisateur", "success")
-            print("Hop, un nouvel utilisateur", "success")
-            # return redirect(url_for("accueil"))
-            return "bravo ! nouvel utilisateur !"
+            # print("Hop, un nouvel utilisateur", "success")
+            return redirect(url_for("home"))
         else:
             flash(",".join(donnees), "error")
             print("existe déjà")
@@ -54,13 +52,13 @@ def login():
             password=request.form.get("password", None)
         )
         if utilisateur:
-            print("Connexion effectuée !!!")
+            # print("Connexion effectuée !!!")
             flash("Connexion effectuée", "success")
             login_user(utilisateur)
             return redirect(url_for("home"))
         else:
             flash("Les identifiants n'ont pas été reconnus", "error")
-            print("Connexion RATEE")
+            # print("Connexion RATEE")
             return render_template("partials/login.html", form=form)
 
     else:
@@ -90,7 +88,6 @@ def afficher_collection():
     )
     return render_template('partials/monprofil.html', films=films_dans_collection)
 
-
 @app.route("/ajouter_collection/<string:film_id>")
 @login_required
 def ajouter_collection(film_id):
@@ -110,3 +107,17 @@ def ajouter_collection(film_id):
         flash('Film non trouvé.', 'error')
         print('Film non trouvé.', 'error')
     return redirect(url_for('afficher_collection'))
+
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    flash('Vous devez être connecté pour accéder à cette page.', 'warning')
+    # print("non")
+    return redirect(url_for('login'))

@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <!-- MESSAGES FLASH-->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
     <header class="header">
         <button type="button" class="btn btn-primary">
             {% if current_user.is_authenticated %}
@@ -38,5 +50,21 @@
     </footer>
 
     <!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+    <script>
+        // Supprimer les messages flash après 3 secondes
+        setTimeout(function() {
+          var flashMessages = document.querySelector('.flash-messages');
+          if (flashMessages) {
+            flashMessages.remove();
+          }
+        }, 3000); // 3000 millisecondes = 3 secondes
+      
+        // Ou supprimer les messages flash lorsque l'utilisateur clique dessus
+        document.addEventListener('click', function(event) {
+          if (event.target.closest('.alert')) {
+            event.target.closest('.alert').remove();
+          }
+        });
+      </script>
 </body>
 </html>
