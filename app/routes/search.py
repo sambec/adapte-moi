@@ -150,19 +150,32 @@ def random_book():
     else:
         return jsonify({"error": "No book found"}), 404
 
-# Afficher la liste des livres présents dans la base de données
+# ROUTE POUR AFFICHER LA LISTE DES LIVRES DE LA BASE DE DONNÉES
 @app.route('/index-books')
 def list_books():
-    page = request.args.get('page', 1, type=int)
-    per_page = 20  # Nombre de livres par page
-    books_paginated = Book.query.paginate(page=page, per_page=per_page, error_out=False)
+    """Fonction qui permet d'afficher la liste des livres présents dans la base de données.
+
+    Returns
+    -------
+    Retourne la liste des livres selon le template index-books.html
+    """
+    page = request.args.get('page', 1, type=int) # numéro de page à afficher, la liste des livres commence à la page 1 par défaut
+    books_paginated = Book.query.paginate(page=page, per_page=app.config["BOOKS_PER_PAGE"], error_out=False)
     
     return render_template('partials/index-books.html', books=books_paginated)
 
+
+# ROUTE POUR AFFICHER LA LISTE DES FILMS DE LA BASE DE DONNÉES
 @app.route('/index-films')
 def list_films():
-    page = request.args.get('page', 1, type=int)
-    per_page = 20  # Nombre de livres par page
-    films_paginated = Film.query.paginate(page=page, per_page=per_page, error_out=False)
+    """Fonction qui permet d'afficher la liste des films présents dans la base de données.
+
+    Returns
+    -------
+    Retourne la liste des films selon le template index-films.html
+
+    """
+    page = request.args.get('page', 1, type=int) # numéro de page à afficher, la liste des films commence à la page 1 par défaut
+    films_paginated = Film.query.paginate(page=page, per_page=app.config["FILMS_PER_PAGE"], error_out=False)
     
     return render_template('partials/index-films.html', films=films_paginated)
