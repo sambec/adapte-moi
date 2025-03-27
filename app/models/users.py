@@ -1,6 +1,7 @@
 from ..app import app, db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+# from .users import Collection
 
 
 class Users(UserMixin, db.Model):
@@ -9,6 +10,7 @@ class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True, autoincrement=True)
     pseudo = db.Column(db.Text, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    collection = db.relationship('Collection', backref='user', lazy=True)
 
     #CONNEXION
     @staticmethod

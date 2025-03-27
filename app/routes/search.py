@@ -89,6 +89,7 @@ def check_adaptation(id_book_):
         film = Film.query.filter_by(id=id_t).first()
         if film:
             films.append({
+                "id_" : film.id,
                 "title" : film.title,
                 "director": film.director,
                 "genres": film.genres, 

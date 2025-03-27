@@ -8,7 +8,13 @@
 </head>
 <body>
     <header class="header">
-        <button type="button" class="btn btn-primary"> <a href="{{ url_for('login') }}">Se connecter</a></button>
+        <button type="button" class="btn btn-primary">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('deconnexion') }}">Se déconnecter</a>
+            {% else %}
+            <a href="{{ url_for('login') }}">Se connecter</a>
+            {% endif %}
+        </button>
         <div class="container">
             <h1 class="logo"><a href="/">🎥📚 Adapte-moi si tu peux</a></h1>
             <nav class="nav">

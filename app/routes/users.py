@@ -1,8 +1,9 @@
 from ..app import app, db
 from flask import render_template, request, flash, redirect, url_for, abort
 from ..models.users import Users
+from ..models.adapte_moi import Film, Collection
 from ..models.formulaires import AjoutUtilisateur, Connexion
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 # @app.route("/login")
@@ -78,3 +79,24 @@ login.login_view = 'connexion'
 @app.route("/utilisateurs/profil", methods=["POST", "GET"])
 def profil():
     return render_template("partials/monprofil.html")
+
+@app.route("/ajouter_collection/<string:film_id>")
+@login_required
+def ajouter_collection(film_id):
+    film = Film.query.get(film_id)
+
+    if film:
+        nouvelle_collection = Collection(
+            user_id=current_user.id, 
+            film_id=film.id,
+            film_title=film.title
+        )
+        db.session.add(nouvelle_collection)
+        db.session.commit()
+        flash(f'Film "{film.title}" ajouté à votre collection.', 'success')
+        print(f'Film "{film.title}" ajouté à votre collection.', 'success')
+    else:
+        flash('Film non trouvé.', 'error')
+        print('Film non trouvé.', 'error')
+    # return redirect(url_for('afficher_collection'))
+    return ":)"
