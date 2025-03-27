@@ -108,8 +108,8 @@ SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd" > .env
 ```cmd
 echo DEBUG=True > .env
 echo SQLALCHEMY_DATABASE_URI=sqlite:///C:\\adapte_moi.sqlite >> .env
-BOOKS_PER_PAGE=20 >> .env
-FILMS_PER_PAGE=20 >> .env
+echo BOOKS_PER_PAGE=20 >> .env
+echo FILMS_PER_PAGE=20 >> .env
 echo SQLALCHEMY_ECHO=False >> .env
 echo WTF_CSRF_ENABLE=True >> .env
 echo SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd >> .env
