@@ -9,7 +9,8 @@ from flask_sqlalchemy import SQLAlchemy
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud
+from wordcloud import WordCloud #il faudra mettre tout ça dans un pip freeze:: pip install flask flask-sqlalchemy matplotlib wordcloud
+
 # from ..models.formulaires import Recherche
 
 # GESTION ERREURS
@@ -73,6 +74,7 @@ def create_figure():
     return fig
 
 
+# -------------------- AUTHENTIFICATION --------------------
 
 # 🎨 Définition des couleurs personnalisées
 COLOR_PALETTE = ["#EDA2A2", "#9AC9C1", "#FEEBB3", "#F28B66", "#4D7F96"]

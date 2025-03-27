@@ -8,6 +8,40 @@
     <section class="info-section">
         <h3>Bienvenue sur votre profil !</h3>
         <p>(Gestion du profil ici et joli graphique)</p>
+        <h2>Genres des films sélectionnés</h2>
+    <canvas id="radarChart"></canvas>
+
+    <script>
+        async function fetchRadarData() {
+            const userId = 1; // Remplace par l'ID utilisateur dynamique
+            const response = await fetch(`/user/${userId}/radar-data`);
+            const data = await response.json();
+
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Genres les plus regardés',
+                        data: data.data,
+                        backgroundColor: 'rgba(154, 201, 193, 0.2)',
+                        borderColor: '#9AC9C1',
+                        pointBackgroundColor: '#F28B66',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scale: {
+                        ticks: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        fetchRadarData();
+    </script>
         <a href="{{ url_for('logout') }}" class="btn btn-danger">Se déconnecter</a>
     </section>
 </div>
