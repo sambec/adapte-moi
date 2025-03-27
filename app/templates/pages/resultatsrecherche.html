@@ -36,11 +36,9 @@
                                 <p>Voici les livres trouvés :</p>
                                 <ul class="result_book">
                                     {% for titre in titres %}
-                                        <p><i>{{titre.title}}</i>, écrit par {{titre.author}} ({{titre.publication_year.strftime('%Y')}}), <a href="{{titre.url_wikidata}}">{{titre.id_wikidata}}</a></p>
-                                        <ul><p><a href="/book_to_film/{{titre.id}}">Voir les adaptations</a></p></ul>
+                                        <p><i>{{titre.title}}</i>, écrit par {{titre.author}} ({{titre.publication_year.strftime('%Y')}}), <a href="{{titre.url_wikidata}}">{{titre.id_wikidata}}</a></br><a href="/book_to_film/{{titre.id}}">Voir les adaptations</a></p>
                                     {% endfor %}
                                 </ul>
-
                         {% else %}
                             <p>Aucun livre n'a été trouvé :(</p>
                         {% endif %}

@@ -328,7 +328,7 @@ img:hover {
 }
 
 /* RESULTAT LIVRES */
-.result_book {
+.result_book p {
     background-color: #FEEBB3;
     border-radius: 15px;
     padding: 15px 20px;
