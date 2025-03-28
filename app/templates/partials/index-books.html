@@ -10,7 +10,7 @@
             <div id="dialog">
                 <ul class="list_books">
                     {% for book in books.items %}
-                        <p><i>{{book.title}}</i> écrit par {{book.author}} ({{book.publication_year.strftime('%Y') if book.publication_year else 'N/A'}}), <a href="{{book.url_wikidata}}">{{book.id_wikidata}}</a><br><a href="/book_to_film/{{book.id}}">Voir les adaptations</a></p>                                                                    
+                        <p><i>{{book.title}}</i>, écrit par {{book.author}} ({{book.publication_year.strftime('%Y') if book.publication_year else 'N/A'}}), <a href="{{book.url_wikidata}}">{{book.id_wikidata}}</a><br><a href="/book_to_film/{{book.id}}">Voir les adaptations</a></p>                                                                    
                     {% endfor %}
                 </ul>
             </div>

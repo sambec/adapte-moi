@@ -9,8 +9,9 @@
             <h2 class="title">Liste des films adaptés de livres</h2>
             <div id="dialog">
                 <ul class="list_films">
-                    {% for film in films.items %}   
-                    <p><i>{{film.title}}</i> réalisé par {{film.director}} en {{film.release_year.strftime('%Y')}} <a href="{{film.url_wikidata}}">{{film.id_wikidata}}</a><br></p>                                                                    
+                    {% for film in films.items %}
+    
+                    <p><i>{{film.title}}</i>, réalisé par {{film.director}} en {{film.release_year.strftime('%Y')}} <a href="{{film.url_wikidata}}">{{film.id_wikidata}}</a><br></p>                                                                    
                     {% endfor %}
                 </ul>
             </div>
@@ -28,3 +29,4 @@
     </section>
 </div>
 {% endblock %}
+

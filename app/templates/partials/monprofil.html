@@ -1,48 +1,122 @@
-
 {% extends "base.html" %}
 
-{% block title %}S'inscrire - Adapte-moi{% endblock %}
+{% block title %}Mon Profil - Adapte-moi{% endblock %}
 
 {% block content %}
 <div class="container">
-    <section class="info-section">
+    <section class="info-section text-center">
         <h3>Bienvenue sur votre profil !</h3>
-        <p>(Gestion du profil ici et joli graphique)</p>
         <h2>Genres des films sélectionnés</h2>
-    <canvas id="radarChart"></canvas>
+        <img src="{{ url_for('genre_radar_png') }}" alt="Répartition des genres de films">
 
-    <script>
-        async function fetchRadarData() {
-            const userId = 1; // Remplace par l'ID utilisateur dynamique
-            const response = await fetch(`/user/${userId}/radar-data`);
-            const data = await response.json();
+    </section>
 
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Genres les plus regardés',
-                        data: data.data,
-                        backgroundColor: 'rgba(154, 201, 193, 0.2)',
-                        borderColor: '#9AC9C1',
-                        pointBackgroundColor: '#F28B66',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scale: {
-                        ticks: { beginAtZero: true }
-                    }
-                }
-            });
-        }
+    <section class="collection-section">
+        <h4 id="collection-title" ondblclick="makeEditable(this)">
+            {{ collection_name or 'Ma collection de films' }}
+        </h4>
 
-        fetchRadarData();
-    </script>
-        <a href="{{ url_for('logout') }}" class="btn btn-danger">Se déconnecter</a>
+
+        {% if films %}
+        <div class="film-grid">
+            {% for film in films %}
+            <div class="film-card">
+                {% if film.poster_url %}
+                <img src="{{ film.poster_url }}" alt="{{ film.title }}" class="film-poster">
+                {% endif %}
+                <p>{{ film.title }} - <span class="film-genre">{{ film.genres }}</span></p>
+                <form action="{{ url_for('supprimer_collection', film_id=film.id) }}" method="post">
+                    <button type="submit" class="delete-btn">&times;</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>Votre collection est vide.</p>
+        {% endif %}
+        <img src="{{ url_for('genre_plot_png') }}" alt="Répartition des genres de films" class="img">
+
     </section>
 </div>
+<script>
+    // SCRIPT pour la modification du TITRE de la collection
+    function makeEditable(element) {
+        const originalText = element.innerText;
+        element.innerHTML = `<input type="text" value="${originalText}" />`;
+
+        const input = element.querySelector('input');
+        input.focus();
+        input.onblur = function() {
+            const newText = input.value;
+            element.innerText = newText;
+
+            fetch('/renommer_collection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Mise à jour du nom de la collection :)');
+                } else {
+                    alert('Erreur lors de la mise à jour du nom :(');
+                }
+            });
+        };
+    }
+</script>
+
+<!-- tentative pour le graphique radar -->
+<!-- <script>
+    async function fetchRadarData() {
+        const userId = 1; // Remplace par l'ID utilisateur dynamique
+        const response = await fetch(`/user/${userId}/radar-data`);
+        const data = await response.json();
+
+        if (!data.labels.length) {
+            document.getElementById('radarChart').parentElement.innerHTML = '<p>Aucune donnée disponible pour le graphique.</p>';
+            return;
+        }
+
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Genres les plus regardés',
+                    data: data.data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.3)'
+                        },
+                        angleLines: {
+                            color: 'rgba(200, 200, 200, 0.5)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchRadarData);
+</script> -->
+
 {% endblock %}

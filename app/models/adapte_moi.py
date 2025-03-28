@@ -33,6 +33,7 @@ class Book(db.Model):
 
 class Film(db.Model):
     __tablename__ = "Film"
+    collections = db.relationship('Collection', backref='film', lazy=True)
 
     id = db.Column(db.Text, primary_key=True)
     title = db.Column(db.Text)
@@ -46,3 +47,12 @@ class Film(db.Model):
 
     def __repr__(self):
         return '<Film %r>' % (self.id)
+    
+class Collection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Text, db.ForeignKey('users.id'), nullable=False)
+    film_id = db.Column(db.Text, db.ForeignKey('Film.id'), nullable=False)
+    film_title = db.Column(db.Text, nullable=False)
+    film_genre = db.Column(db.Text, nullable=False)
+    name = db.Column(db.String(100), nullable=True)
+    # film = db.relationship('Film', backref=db.backref('collections', lazy=True))

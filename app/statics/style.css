@@ -117,6 +117,7 @@ a:hover {
 
 .btn a {
     text-decoration: none;
+    color: #E3E3E3;
 }
 
 .btn:hover {
@@ -374,6 +375,50 @@ img:hover {
     align-items: center;
     margin-top: 10px;
 }
+
+.profil{
+    top : 60px;
+    background-color: #4D7F96;
+    color: #E3E3E3;
+}
+
+
+.flash-messages{
+    padding: 1em;
+    width: 400px;
+    background: #9AC9C1;
+    position: fixed;
+    top : calc(50%-400px);
+    left: 50%;
+}
+
+.flash-messages {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1000;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+#collection-title::after{
+    content: '';
+    background-image: url('./icons/modif.png');
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: contain; 
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top : 0px;
+    transform: translateX(10px);
+}
 /* Centering everything */
 .gif-container {
     position: relative;
@@ -500,4 +545,40 @@ img:hover {
         width: 150px;
         height: 150px;
         object-fit: cover;
+    }
+
+    .film-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+    }
+    .film-card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        background: #f9f9f9;
+        position: relative;
+    }
+    .film-poster {
+        width: 100%;
+        border-radius: 5px;
+    }
+    .delete-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: red;
+        cursor: pointer;
+    }
+    .delete-btn:hover {
+        color: darkred;
+    }
+    .film-genre {
+        color: #F28B66;
+        font-weight: bold;
     }

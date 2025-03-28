@@ -7,6 +7,8 @@ import io
 import random
 from wordcloud import WordCloud 
 from ..models.adapte_moi import Film, Book, film_book
+from flask_login import current_user
+
 # from ..models.formulaires import Recherche
 
 # ROUTE POUR LA GESTION DES ERREURS
@@ -28,7 +30,12 @@ def page_not_found(error):
 @app.route("/")
 
 @app.route("/accueil")
+@app.route("/home")
 def home():
+    if current_user.is_authenticated:
+        print(f'Utilisateur {current_user.id} \({current_user.pseudo}\) est connecté.')
+    else:
+        print(f'(Aucun utilisateur n\'est connecté.')
     return render_template("partials/index.html")
 
 # ROUTE POUR LA PAGE À PROPOS
@@ -132,3 +139,6 @@ def create_wordcloud():
     ax.imshow(wordcloud, interpolation="bilinear")
     ax.axis("off")  # Supprimer les axes
     return fig
+
+
+
