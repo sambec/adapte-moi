@@ -350,6 +350,10 @@ img:hover {
     margin-top: 10px;
 }
 
+.profil{
+    top : 60px;
+}
+
 .flash-messages{
     padding: 1em;
     width: 400px;
