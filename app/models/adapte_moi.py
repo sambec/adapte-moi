@@ -53,4 +53,5 @@ class Collection(db.Model):
     user_id = db.Column(db.Text, db.ForeignKey('users.id'), nullable=False)
     film_id = db.Column(db.Text, db.ForeignKey('Film.id'), nullable=False)
     film_title = db.Column(db.Text, nullable=False)
+    name = db.Column(db.String(100), nullable=True)
     # film = db.relationship('Film', backref=db.backref('collections', lazy=True))

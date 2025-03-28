@@ -1,5 +1,5 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort, session
+from flask import render_template, request, flash, redirect, url_for, jsonify, abort, session
 from ..models.users import Users
 from ..models.adapte_moi import Film, Collection
 from ..models.formulaires import AjoutUtilisateur, Connexion
@@ -79,14 +79,15 @@ login.login_view = 'connexion'
 @app.route('/collection')
 @login_required
 def afficher_collection():
-    # Récupérer les films de la collection de l'utilisateur connecté
+    # Récupère les films de la collection de l'utilisateur connecté
     films_dans_collection = (
         db.session.query(Film)
         .join(Collection, Film.id == Collection.film_id)
         .filter(Collection.user_id == current_user.id)
         .all()
     )
-    return render_template('partials/monprofil.html', films=films_dans_collection)
+    collection_name = Collection.query.filter_by(user_id=current_user.id).first().name
+    return render_template('partials/monprofil.html', films=films_dans_collection, collection_name=collection_name)
 
 @app.route("/ajouter_collection/<string:film_id>")
 @login_required
@@ -107,6 +108,22 @@ def ajouter_collection(film_id):
         flash('Film non trouvé.', 'error')
         print('Film non trouvé.', 'error')
     return redirect(url_for('afficher_collection'))
+
+@app.route('/renommer_collection', methods=['POST'])
+@login_required
+def renommer_collection():
+    data = request.get_json()
+    new_name = data.get('name')
+
+    # Mettre à jour le nom de la collection dans la base de données
+    # Assurez-vous de mettre à jour la bonne collection pour l'utilisateur connecté
+    collection = Collection.query.filter_by(user_id=current_user.id).first()
+    if collection:
+        collection.name = new_name
+        db.session.commit()
+        return jsonify({'success': True})
+
+    return jsonify({'success': False})
 
 
 login_manager = LoginManager()

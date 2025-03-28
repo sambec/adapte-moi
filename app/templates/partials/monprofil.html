@@ -11,20 +11,53 @@
     </section>
 
     <div>
-        <h4>Ma collection de films</h4>
+        <h4 id="collection-title" ondblclick="makeEditable(this)">
+            {{ collection_name or 'Ma collection de films' }}
+        </h4>
+        <!-- <button onclick="makeEditable(document.getElementById('collection-title'))">
+            Éditer le titre
+        </button> -->
         {% if films %}
         <ul>
             {% for film in films %}
                 <li>
                     {{ film.title }}
-                    
-                    </form>
                 </li>
             {% endfor %}
         </ul>
-    {% else %}
+        {% else %}
         <p>Votre collection est vide.</p>
-    {% endif %}
+        {% endif %}
     </div>
 </div>
+<script>
+    function makeEditable(element) {
+        const originalText = element.innerText;
+        element.innerHTML = `<input type="text" value="${originalText}" />`;
+
+        const input = element.querySelector('input');
+        input.focus();
+        input.onblur = function() {
+            const newText = input.value;
+            element.innerText = newText;
+
+            fetch('/renommer_collection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Mise à jour du nom de la collection :)');
+                } else {
+                    alert('Erreur lors de la mise à jour du nom :(');
+                }
+            });
+        };
+    }
+</script>
+
 {% endblock %}

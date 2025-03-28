@@ -371,3 +371,18 @@ img:hover {
     border-radius: 8px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
+
+#collection-title::after{
+    content: '';
+    background-image: url('./icons/modif.png');
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: contain; 
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top : 0px;
+    transform: translateX(10px);
+}
