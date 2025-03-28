@@ -3,18 +3,22 @@
 {% block title %}S'inscrire - Adapte-moi{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Inscription</h2>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.prenom.label }} {{ form.prenom(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.password.label }} {{ form.password(class="form-control") }}
-        </div>
-        <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
-    </form>
-    <p>Déjà un compte ? <a href="{{ url_for('login') }}">Connectez-vous ici</a></p>
-</div>
+<h2>S'inscrire</h2>
+<form action="{{url_for('register')}}" method="post" name="register">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        <label for="pseudo">Pseudo de l'utilisateur</label>
+        {{ form.pseudo(class_="form-control", placeholder_="Pseudo") }}
+        <small id="pseudo" class="form-text text-muted">Entrer le pseudo de l'utilisateur</small>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Mot de passe</label>
+        {{ form.password(class_="form-control", placeholder_="Mot de passe", minlength_="7") }}
+        <small id="password" class="form-text text-muted">Entrer un mot de passe</small>
+    </div>
+
+    <p><input type="submit" value="Ajouter"></p>
+</form>
 {% endblock %}

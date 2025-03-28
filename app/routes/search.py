@@ -80,17 +80,18 @@ def results():
     titles = ""
     if request.method == "POST":
         donnees = request.form
-        print(donnees)
+        # print(donnees)
         my_title = donnees.get("title")
         if my_title:
-            titles = Book.query.filter(Book.title.like(f"%{my_title}%")).all()
+            titles = Book.query.filter(Book.title.ilike(f"%{my_title}%")).all()
+            # Si silence (la recherche de titre de livre ne donne rien) alors on checke chez les auteurs
+            if len(titles) == 0:
+                titles = Book.query.filter(Book.author.ilike(f"%{my_title}%")).all()
         else :
-            # à tester/modifier
-            titles = "rieng"
+            titles = []
     else :
         return render_template("pages/resultatsrecherche.html", titres=titles)
     return render_template("pages/resultatsrecherche.html", titres=titles)
-
 
 # ROUTE pour TESTER la TABLE DE RELATION
 @app.route("/book_to_film/<string:id_book_>")
@@ -104,6 +105,7 @@ def check_adaptation(id_book_):
         film = Film.query.filter_by(id=id_t).first()
         if film:
             films.append({
+                "id_" : film.id,
                 "title" : film.title,
                 "director": film.director,
                 "genres": film.genres, 
@@ -112,6 +114,8 @@ def check_adaptation(id_book_):
                 "id_wikidata": film.id_wikidata,
                 "color": notation_film(film.rating)
             })
+        else :
+            return "Aucun film trouvé pour ce livre", 404
     if films:
         # return render_template("pages/resultatsrecherche.html", titres_film=films)
         # return f"*{films[0].title} * {result}"

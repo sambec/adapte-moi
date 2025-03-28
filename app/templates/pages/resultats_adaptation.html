@@ -8,7 +8,13 @@
 </head>
 <body>
     <header class="header">
-        <button type="button" class="btn btn-primary"><a href="seconnecter.html">Se connecter</a></button>
+        <button type="button" class="btn btn-primary">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('deconnexion') }}">Se déconnecter</a>
+            {% else %}
+            <a href="{{ url_for('login') }}">Se connecter</a>
+            {% endif %}
+        </button>
         <div class="container">
             <h1 class="logo"><center><a href="{{ url_for('home') }}">🎥 Adapte-moi si tu peux ! 📚</a></center></h1>
             <nav class="nav">
@@ -24,7 +30,7 @@
             <section class="info-section">
                 <div>
                     <h2 class="title">Rechercher un livre adapté en film</h2>
-                    <form action="results" method="POST" class="search-form">
+                    <form action="{{ url_for('results') }}" method="POST" class="search-form">
                         <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                         <button type="submit" class="search-button">🔍 Rechercher</button>
                     </form>
@@ -37,7 +43,8 @@
                                 <ul class="result_film">
                                     {% for film in films %}
                                         <p><i>{{film.title}}</i>, réalisé par {{film.director}} ({{film.genres}}, {{film.release_year.strftime('%Y')}}), <a href="{{film.url_wikidata}}">{{film.id_wikidata}}</a>
-                                            <span class="rating-indicator rating-{{ film.color }}"></span></li>
+                                            <span class="rating-indicator rating-{{ film.color }}"></span>
+                                            <span><a href="{{ url_for('ajouter_collection', film_id=film.id_)}}">(+)</a></span>
                                         
                                     {% endfor %}
                                 </ul>

@@ -9,8 +9,13 @@ from flask_sqlalchemy import SQLAlchemy
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 from wordcloud import WordCloud #il faudra mettre tout ça dans un pip freeze:: pip install flask flask-sqlalchemy matplotlib wordcloud
 
+=======
+from wordcloud import WordCloud
+from flask_login import current_user
+>>>>>>> joel
 # from ..models.formulaires import Recherche
 
 # GESTION ERREURS
@@ -23,8 +28,13 @@ def page_not_found(error):
 @app.route("/index")
 @app.route("/index.html")
 @app.route("/accueil")
+@app.route("/home")
 def home():
     # return app/statics/test.pyredirect(url_for("index"))
+    if current_user.is_authenticated:
+        print(f'Utilisateur {current_user.id} \({current_user.pseudo}\) est connecté.')
+    else:
+        print(f'(Aucun utilisateur n\'est connecté.')
     return render_template("partials/index.html")
 
 @app.route("/about")

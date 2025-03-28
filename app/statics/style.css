@@ -374,6 +374,47 @@ img:hover {
     align-items: center;
     margin-top: 10px;
 }
+
+.profil{
+    top : 60px;
+}
+
+.flash-messages{
+    padding: 1em;
+    width: 400px;
+    background: #9AC9C1;
+    position: fixed;
+    top : calc(50%-400px);
+    left: 50%;
+}
+
+.flash-messages {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1000;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+#collection-title::after{
+    content: '';
+    background-image: url('./icons/modif.png');
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: contain; 
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top : 0px;
+    transform: translateX(10px);
+}
 /* Centering everything */
 .gif-container {
     position: relative;

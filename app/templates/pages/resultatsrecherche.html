@@ -8,7 +8,16 @@
 </head>
 <body>
     <header class="header">
-        <button type="button" class="btn btn-primary"><a href="seconnecter.html">Se connecter</a></button>
+        <button type="button" class="btn btn-primary">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('deconnexion') }}">Se déconnecter</a>
+            {% else %}
+            <a href="{{ url_for('login') }}">Se connecter</a>
+            {% endif %}
+        </button>
+        {% if current_user.is_authenticated %}
+            <button type="button" class="btn btn-primary">Profil</button>
+        {% endif %}
         <div class="container">
             <h1 class="logo"><center><a href="{{ url_for('home') }}">🎥 Adapte-moi si tu peux ! 📚</a></center></h1>
             <nav class="nav">
@@ -24,7 +33,7 @@
             <section class="info-section">
                 <div>
                     <h2 class="title">Rechercher un livre adapté en film</h2>
-                    <form action="results" method="POST" class="search-form">
+                    <form action="{{ url_for('results') }}" method="POST" class="search-form">
                         <input type="text" name="title" placeholder="Entrez le titre d'un livre..." required class="search-input">
                         <button type="submit" class="search-button">🔍 Rechercher</button>
                     </form>
@@ -36,7 +45,8 @@
                                 <p>Voici les livres trouvés :</p>
                                 <ul class="result_book">
                                     {% for titre in titres %}
-                                        <p><i>{{titre.title}}</i>, écrit par {{titre.author}} ({{titre.publication_year.strftime('%Y')}}), <a href="{{titre.url_wikidata}}">{{titre.id_wikidata}}</a></br><a href="/book_to_film/{{titre.id}}">Voir les adaptations</a></p>
+                                        <p><i>{{titre.title}}</i>, écrit par {{titre.author}} ({% if titre.publication_year %}{{titre.publication_year.strftime('%Y')}}{% else %}Année inconnue{% endif %}), <a href="{{titre.url_wikidata}}">{{titre.id_wikidata}}</a></p>
+                                        <ul><p><a href="/book_to_film/{{titre.id}}">Voir les adaptations</a></p></ul>
                                     {% endfor %}
                                 </ul>
                         {% else %}
