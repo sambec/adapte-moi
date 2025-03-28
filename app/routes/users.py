@@ -7,15 +7,20 @@ from flask_login import LoginManager, login_user, current_user, logout_user, log
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import io
+import numpy as np
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return Users.query.get(int(user_id))
+login_manager = LoginManager()
+login_manager.init_app(app)
 
-# @login_manager.unauthorized_handler
-# def unauthorized_callback():
-#     flash('Vous devez être connecté pour accéder à cette page.', 'warning')
-#     return redirect(url_for('login'))
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    flash('Vous devez être connecté pour accéder à cette page.', 'warning')
+    # print("non")
+    return redirect(url_for('login'))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -142,5 +147,46 @@ def create_genre_figure(user_id):
     axis.set_title("Répartition des genres de films dans votre collection")
     axis.set_xlabel("Genre")
     axis.set_ylabel("Nombre de films")
+
+    return fig
+
+@app.route('/genre_radar.png')
+@login_required
+def genre_radar_png():
+    fig = create_genre_radar(current_user.id)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+def create_genre_radar(user_id):
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1, polar=True)
+
+    # Récupération des données depuis la base SQL
+    films = (
+        db.session.query(Film)
+        .join(Collection, Film.id == Collection.film_id)
+        .filter(Collection.user_id == user_id)
+        .all()
+    )
+
+    # Extraction des données pour les genres
+    genres = [film.genres for film in films if film.genres]
+    unique_genres = sorted(set(genres))
+    counts = [genres.count(genre) for genre in unique_genres]
+
+    # Ajout des genres manquants pour avoir un graphique complet
+    num_vars = len(unique_genres)
+    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+    counts += counts[:1]
+    angles += angles[:1]
+
+    # Création du graphique en radar
+    axis.fill(angles, counts, color='#EDA2A2', alpha=0.25)
+    axis.plot(angles, counts, color='#EDA2A2', linewidth=2)
+    axis.set_theta_offset(np.pi / 2)
+    axis.set_theta_direction(-1)
+    axis.set_thetagrids(np.degrees(angles[:-1]), unique_genres)
+    axis.set_title("Répartition des genres de films dans votre collection")
 
     return fig

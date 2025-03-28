@@ -7,14 +7,15 @@
     <section class="info-section text-center">
         <h3>Bienvenue sur votre profil !</h3>
         <h2>Genres des films sélectionnés</h2>
-        <canvas id="radarChart"></canvas>
+        <img src="{{ url_for('genre_radar_png') }}" alt="Répartition des genres de films">
+
     </section>
 
     <section class="collection-section">
         <h4 id="collection-title" ondblclick="makeEditable(this)">
             {{ collection_name or 'Ma collection de films' }}
         </h4>
-        <img src="{{ url_for('genre_plot_png') }}" alt="Répartition des genres de films" class="img">
+
 
         {% if films %}
         <div class="film-grid">
@@ -33,8 +34,40 @@
         {% else %}
         <p>Votre collection est vide.</p>
         {% endif %}
+        <img src="{{ url_for('genre_plot_png') }}" alt="Répartition des genres de films" class="img">
+
     </section>
 </div>
+<script>
+    // SCRIPT pour la modification du TITRE de la collection
+    function makeEditable(element) {
+        const originalText = element.innerText;
+        element.innerHTML = `<input type="text" value="${originalText}" />`;
+
+        const input = element.querySelector('input');
+        input.focus();
+        input.onblur = function() {
+            const newText = input.value;
+            element.innerText = newText;
+
+            fetch('/renommer_collection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Mise à jour du nom de la collection :)');
+                } else {
+                    alert('Erreur lors de la mise à jour du nom :(');
+                }
+            });
+        };
+    }
+</script>
 
 <!-- tentative pour le graphique radar -->
 <!-- <script>
