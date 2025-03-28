@@ -55,3 +55,8 @@ class Users(UserMixin, db.Model):
     @login.user_loader
     def get_user_by_id(id):
         return Users.query.get(int(id))
+    
+# tentative pour le graphique en radar
+# @app.route('/user/<int:user_id>/radar')
+# def radar_chart(user_id):
+#     return render_template('radar.html', user_id=user_id)

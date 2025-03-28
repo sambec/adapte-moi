@@ -1,138 +1,89 @@
-
 {% extends "base.html" %}
 
-{% block title %}S'inscrire - Adapte-moi{% endblock %}
+{% block title %}Mon Profil - Adapte-moi{% endblock %}
 
 {% block content %}
 <div class="container">
-    <section class="info-section">
+    <section class="info-section text-center">
         <h3>Bienvenue sur votre profil !</h3>
         <h2>Genres des films sélectionnés</h2>
-    <canvas id="radarChart"></canvas>
-
-    <script>
-        async function fetchRadarData() {
-            const userId = 1; // Remplace par l'ID utilisateur dynamique
-            const response = await fetch(`/user/${userId}/radar-data`);
-            const data = await response.json();
-
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Genres les plus regardés',
-                        data: data.data,
-                        backgroundColor: 'rgba(154, 201, 193, 0.2)',
-                        borderColor: '#9AC9C1',
-                        pointBackgroundColor: '#F28B66',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scale: {
-                        ticks: { beginAtZero: true }
-                    }
-                }
-            });
-        }
-
-        fetchRadarData();
-    </script>
-        <a href="{{ url_for('deconnexion') }}" class="btn btn-danger">Se déconnecter</a>
+        <canvas id="radarChart"></canvas>
     </section>
 
-    <div>
+    <section class="collection-section">
         <h4 id="collection-title" ondblclick="makeEditable(this)">
             {{ collection_name or 'Ma collection de films' }}
         </h4>
-        <!-- <button onclick="makeEditable(document.getElementById('collection-title'))">
-            Éditer le titre
-        </button> -->
+        <img src="{{ url_for('genre_plot_png') }}" alt="Répartition des genres de films" class="img">
+
         {% if films %}
-        <ul>
+        <div class="film-grid">
             {% for film in films %}
-                <li>
-                    {{ film.title }},  <span class="genre_{{ film.genres | slugify }}">{{ film.genres }}</span>
-                    <form action="{{ url_for('supprimer_collection', film_id=film.id) }}" method="post" style="display:inline;">
-                        <button type="submit">Supprimer</button>
-                    </form>
-                </li>
+            <div class="film-card">
+                {% if film.poster_url %}
+                <img src="{{ film.poster_url }}" alt="{{ film.title }}" class="film-poster">
+                {% endif %}
+                <p>{{ film.title }} - <span class="film-genre">{{ film.genres }}</span></p>
+                <form action="{{ url_for('supprimer_collection', film_id=film.id) }}" method="post">
+                    <button type="submit" class="delete-btn">&times;</button>
+                </form>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
         {% else %}
         <p>Votre collection est vide.</p>
         {% endif %}
-    </div>
+    </section>
 </div>
-<script>
-    // SCRIPT pour la modification du TITRE de la collection
-    function makeEditable(element) {
-        const originalText = element.innerText;
-        element.innerHTML = `<input type="text" value="${originalText}" />`;
 
-        const input = element.querySelector('input');
-        input.focus();
-        input.onblur = function() {
-            const newText = input.value;
-            element.innerText = newText;
+<!-- tentative pour le graphique radar -->
+<!-- <script>
+    async function fetchRadarData() {
+        const userId = 1; // Remplace par l'ID utilisateur dynamique
+        const response = await fetch(`/user/${userId}/radar-data`);
+        const data = await response.json();
 
-            fetch('/renommer_collection', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+        if (!data.labels.length) {
+            document.getElementById('radarChart').parentElement.innerHTML = '<p>Aucune donnée disponible pour le graphique.</p>';
+            return;
+        }
+
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Genres les plus regardés',
+                    data: data.data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
                 },
-                body: JSON.stringify({ name: newText }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Mise à jour du nom de la collection :)');
-                } else {
-                    alert('Erreur lors de la mise à jour du nom :(');
-                }
-            });
-        };
-    }
-</script>
-
-<!-- le script suivant RECUPERE nombre de genre, mais côté vue !!! On récupère côté vue le nombre de genre  en "sondant" le HTML : 
- chaque genre affiché est un élément HTML span qui a une classe du style "genre_comedie-musicale". Il compte donc chaque classe-->
-<!--NOTE : On pourrait également le faire via une route -->
-<div id="genre-counts"></div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        countGenres();
-    });
-
-    function countGenres() {
-        // Sélectionne tous les éléments avec une classe qui commence par "genre_"
-        const elements = document.querySelectorAll('[class^="genre_"]');
-        const genreCounts = {};
-
-        // Compte les occurrences de chaque classe
-        elements.forEach(element => {
-            element.classList.forEach(className => {
-                if (className.startsWith('genre_')) {
-                    if (genreCounts[className]) {
-                        genreCounts[className]++;
-                    } else {
-                        genreCounts[className] = 1;
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.3)'
+                        },
+                        angleLines: {
+                            color: 'rgba(200, 200, 200, 0.5)'
+                        }
                     }
                 }
-            });
+            }
         });
-        // alert(elements)
-
-        // Afficher les résultats
-        const countsDiv = document.getElementById('genre-counts');
-        countsDiv.innerHTML = ''; // Effacer les résultats précédents
-        for (const [genre, count] of Object.entries(genreCounts)) {
-            const genreName = genre.replace('genre_', '').replace(/-/g, ' '); // Convertir le nom de la classe en nom lisible
-            countsDiv.innerHTML += `<p>${genreName}: ${count}</p>`;
-        }
     }
-</script>
+
+    document.addEventListener('DOMContentLoaded', fetchRadarData);
+</script> -->
+
 {% endblock %}

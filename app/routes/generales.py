@@ -116,3 +116,6 @@ def create_wordcloud():
     ax.imshow(wordcloud, interpolation="bilinear")
     ax.axis("off")  # Supprimer les axes
     return fig
+
+
+
