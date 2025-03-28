@@ -66,13 +66,12 @@ def results():
         # print(donnees)
         my_title = donnees.get("title")
         if my_title:
-            titles = Book.query.filter(Book.title.like(f"%{my_title}%")).all()
+            titles = Book.query.filter(Book.title.ilike(f"%{my_title}%")).all()
             # Si silence (la recherche de titre de livre ne donne rien) alors on checke chez les auteurs
             if len(titles) == 0:
-                titles = Book.query.filter(Book.author.like(f"%{my_title}%")).all()
+                titles = Book.query.filter(Book.author.ilike(f"%{my_title}%")).all()
         else :
-            # à tester/modifier
-            titles = "rieng"
+            titles = []
     else :
         return render_template("pages/resultatsrecherche.html", titres=titles)
     return render_template("pages/resultatsrecherche.html", titres=titles)
