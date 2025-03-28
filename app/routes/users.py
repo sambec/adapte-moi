@@ -125,6 +125,20 @@ def renommer_collection():
 
     return jsonify({'success': False})
 
+@app.route('/supprimer_collection/<string:film_id>', methods=['POST'])
+@login_required
+def supprimer_collection(film_id):
+    collection_a_supprimer = Collection.query.filter_by(
+        user_id=current_user.id, film_id=film_id).first()
+
+    if collection_a_supprimer:
+        db.session.delete(collection_a_supprimer)
+        db.session.commit()
+        flash(f'Film supprimé de votre collection.', 'success')
+    else:
+        flash('Film non trouvé dans votre collection.', 'error')
+
+    return redirect(url_for('afficher_collection'))
 
 login_manager = LoginManager()
 login_manager.init_app(app)
