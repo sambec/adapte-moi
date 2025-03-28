@@ -86,7 +86,8 @@ def afficher_collection():
         .filter(Collection.user_id == current_user.id)
         .all()
     )
-    collection_name = Collection.query.filter_by(user_id=current_user.id).first().name
+    collection = Collection.query.filter_by(user_id=current_user.id).first()
+    collection_name = collection.name if collection else 'Ma collection de films'
     return render_template('partials/monprofil.html', films=films_dans_collection, collection_name=collection_name)
 
 @app.route("/ajouter_collection/<string:film_id>")
