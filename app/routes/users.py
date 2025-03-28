@@ -100,7 +100,8 @@ def ajouter_collection(film_id):
         nouvelle_collection = Collection(
             user_id=current_user.id, 
             film_id=film.id,
-            film_title=film.title
+            film_title=film.title,
+            film_genre=film.genres
         )
         db.session.add(nouvelle_collection)
         db.session.commit()
