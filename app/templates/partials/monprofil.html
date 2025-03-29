@@ -34,6 +34,16 @@
         {% else %}
         <p>Votre collection est vide.</p>
         {% endif %}
+        {% if recommandation %}
+        <div>
+            <h3>Recommandation pour vous :</h3>
+            <p>Vous aimez bien le genre "{{ recommandation.genres }}". Vous aimerez aussi :</p>
+            <p>{{ recommandation.title }}</p>
+            <span><a href="{{ url_for('ajouter_collection', film_id=recommandation.id) }}">(+)</a></span>
+
+        </div>
+    {% endif %}
+
         <img src="{{ url_for('genre_plot_png') }}" alt="Répartition des genres de films" class="img">
 
     </section>

@@ -8,6 +8,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import io
 import numpy as np
+import random
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -62,7 +63,35 @@ def deconnexion():
         logout_user()
     flash("Vous êtes déconnecté", "info")
     return redirect(url_for("home"))
+def get_recommendation(user_id):
+    # Récupération des films de la collection de l'utilisateur
+    films_dans_collection = (
+        db.session.query(Film)
+        .join(Collection, Film.id == Collection.film_id)
+        .filter(Collection.user_id == user_id)
+        .all()
+    )
 
+    # Extraction des genres
+    genres = [film.genres for film in films_dans_collection if film.genres]
+    unique_genres = sorted(set(genres))
+    counts = [genres.count(genre) for genre in unique_genres]
+
+    # Identifier le genre le plus fréquent
+    if counts:
+        most_frequent_genre = unique_genres[counts.index(max(counts))]
+    else:
+        return None
+
+    # Sélectionner un film aléatoire du genre le plus fréquent
+    recommended_film = (
+        db.session.query(Film)
+        .filter(Film.genres == most_frequent_genre)
+        .order_by(db.func.random())
+        .first()
+    )
+
+    return recommended_film
 @app.route('/profil')
 @app.route('/collection')
 @login_required
@@ -75,8 +104,11 @@ def afficher_collection():
     )
     collection = Collection.query.filter_by(user_id=current_user.id).first()
     collection_name = collection.name if collection else 'Ma collection de films'
-    return render_template('partials/monprofil.html', films=films_dans_collection, collection_name=collection_name)
 
+    # Obtenir une recommandation basée sur les genres de films dans la collection
+    recommandation = get_recommendation(current_user.id)
+
+    return render_template('partials/monprofil.html', films=films_dans_collection, collection_name=collection_name, recommandation=recommandation)
 @app.route("/ajouter_collection/<string:film_id>")
 @login_required
 def ajouter_collection(film_id):
@@ -190,3 +222,4 @@ def create_genre_radar(user_id):
     axis.set_title("Répartition des genres de films dans votre collection")
 
     return fig
+
