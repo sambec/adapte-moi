@@ -14,10 +14,11 @@ Voici un aperçu de l'application :
 ### Fonctions de base :
 - **Recherche intuitive 🔍**
   - Recherchez des livres adaptés en films par titre.
-  - Accédez à des liens vers les pages Wikipedia pour plus d'informations.
+  - Accédez à des liens vers les pages Wikidata pour plus d'informations.
   - Consultez un indice de recommandation pour chaque adaptation.
-- **Top 10 des livres les plus recherchés 📖**
-  - Découvrez les 10 livres les plus populaires adaptés en films.
+- **Exploration des collections 📖**
+  - Accéder à un livre au hasard.
+  - Découvrez les livres et films présents dans l'application.
 - **Système d'authentification 🔐**
   - Inscription et connexion des utilisateurs.
   - Gérez votre profil utilisateur.
