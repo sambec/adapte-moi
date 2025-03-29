@@ -54,25 +54,26 @@ Suivez ces étapes pour configurer le projet en local :
 2. **Créez un environnement virtuel :**
    ```bash
    python3 -m venv venv
+   ```
+3. **Activer l'environnement virtuel :**
+   ```bash
    source venv/bin/activate  # Sur Windows : venv\Scripts\activate
    ```
-3. **Installez les dépendances :**
+4. **Installez les dépendances :**
    ```bash
    pip install -r requirements.txt
    ```
-4. **Configurez la base de données :**
+5. **Configurez l'environnement :**
    ```bash
-   flask db init
-   flask db migrate -m "Initial migration."
-   flask db upgrade
+   créer un fichier .env à côté de run.py
    ```
-5. **Lancez l'application :**
+6. **Lancez l'application :**
    ```bash
-   python run.py
+   python3 run.py
    ```
    - Ouvrez l'application dans votre navigateur à : [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-
+À chaque lancement de l'application, n'oubliez pas d'activer votre environnement virtuel.
 
 ## Configuration de l'environnement ⚙️
 
