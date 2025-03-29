@@ -174,6 +174,8 @@ Cette application repose sur un travail approfondi de collecte, de nettoyage et 
 - **Wikidata** (via requêtes SPARQL) pour les informations sur les livres et les films.
 - **Le Deuxième Texte** sur Data.gouv et **The  Movie Dataset** sur Kaggle pour des jeux de données complémentaires.
 
+Les données issues de **Wikidata** et de **The Movie Dataset** sont publiées sous licence [Creative Commons Transfert dans le Domaine Public (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/). Le jeu de données produit par **Le Deuxième Texte** (Auteurs et autrices dans les programmes d'enseignement ou de concours de lettres) est publié sous licence [Creative Commons Attribution Share-Alike (cc-by-sa)](https://creativecommons.org/licenses/by-sa/4.0/). 
+
 Ces données ont été intégrées dans des tableaux CSV dans Dataiku puis dans une base de données SQLite par un script Python, permettant de relier les livres à leurs adaptations cinématographiques et de fournir des résultats précis et pertinents.
 
 ---
@@ -220,7 +222,6 @@ N’hésitez pas à explorer le projet et à contribuer ! 😊
 ## Documentation 
 
 - [Documentation Flask](https://flask.palletsprojects.com/)
-- [Framework Bootstrap](https://getbootstrap.com/)
 - [Le Deuxième Texte](https://www.data.gouv.fr/fr/datasets/auteurs-et-autrices-dans-les-programmes-denseignement-ou-de-concours-de-lettres/)
 - [The Movie Dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
 
