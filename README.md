@@ -7,8 +7,7 @@ Bienvenue sur **Adapte-moi si tu peux**, une application web construite avec **F
 ## Notre application en images 🖼️  
 Voici un aperçu de l'application :  
 
-![Démo](app\statics\screenshots\démo-adapte-moi.gif)  
-
+![Démo](app/statics/screenshots/démo-adapte-moi.gif)
 
 ## Fonctionnalités principales 🚀
 
