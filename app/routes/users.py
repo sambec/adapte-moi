@@ -112,8 +112,16 @@ def afficher_collection():
 @app.route("/ajouter_collection/<string:film_id>")
 @login_required
 def ajouter_collection(film_id):
+    if not current_user.is_authenticated:
+        flash("Vous devez être connecté pour ajouter un film à votre collection.", "warning")
+        return redirect(url_for('login'))
+    
     film = Film.query.get(film_id)
-    if film:
+    
+    existe_deja = Collection.query.filter_by(user_id=current_user.id, film_id=film.id).first()
+    if existe_deja:
+        flash(f'Le film "{film.title}" est déjà dans votre collection.', 'warning')
+    else:
         nouvelle_collection = Collection(
             user_id=current_user.id,
             film_id=film.id,
@@ -123,9 +131,20 @@ def ajouter_collection(film_id):
         db.session.add(nouvelle_collection)
         db.session.commit()
         flash(f'Film "{film.title}" ajouté à votre collection.', 'success')
-    else:
-        flash('Film non trouvé.', 'error')
-    return redirect(url_for('afficher_collection'))
+
+        if film:
+            nouvelle_collection = Collection(
+                user_id=current_user.id,
+                film_id=film.id,
+                film_title=film.title,
+                film_genre=film.genres
+            )
+            db.session.add(nouvelle_collection)
+            db.session.commit()
+            flash(f'Film "{film.title}" ajouté à votre collection.', 'success')
+        else:
+            flash('Film non trouvé.', 'error')
+        return redirect(url_for('afficher_collection'))
 
 @app.route('/renommer_collection', methods=['POST'])
 @login_required
