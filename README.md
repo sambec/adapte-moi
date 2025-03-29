@@ -158,7 +158,7 @@ SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd
 ├── test_db.py            # Script de test pour la base de données
 ```
 
-La structure de notre base de données : [MLD](app\statics\images\MLD_adapte_moi.pdf)
+La structure de notre base de données : [MLD](app/statics/images/MLD_adapte_moi.pdf)
 ---
 
 ## Technologies utilisées 🛠️
