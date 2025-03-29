@@ -1,4 +1,4 @@
-# Adapte-moi si tu peux 🎥📚
+# 🎥 Adapte-moi si tu peux ! 📚
 
 Bienvenue sur **Adapte-moi si tu peux**, une application web construite avec **Flask** pour vous aider à découvrir des films adaptés de livres. Cette application vous permet de rechercher des adaptations, de consulter des informations détaillées sur les livres et les films, et de gérer une liste personnalisée de films à voir.
 
@@ -7,8 +7,7 @@ Bienvenue sur **Adapte-moi si tu peux**, une application web construite avec **F
 ## Notre application en images 🖼️  
 Voici un aperçu de l'application :  
 
-![Page d'accueil](../adapte-moi/app/statics/screenshots/home.png)  
-<!-- ![Page de recherche](static/screenshots/search.png)   -->
+![Démo](app\statics\screenshots\démo-adapte-moi.gif)  
 
 
 ## Fonctionnalités principales 🚀
@@ -142,18 +141,24 @@ SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd
 ```
 /adapte-moi
 ├── app/
-│   ├── routes/           # Routes de l'application
 │   ├── models/           # Modèles de base de données
-│   ├── forms.py          # Formulaires Flask-WTF
-│   ├── static/           # CSS, JavaScript et images
-│   └── templates/        # Templates HTML
-│   └── utils/            # Boîte à outils
-├── config.py             # Paramètres de configuration
-├── run.py                # Point d'entrée de l'application
+│   ├── routes/           # Routes de l'application
+│   ├── statics/          # CSS, JavaScript et images
+│   ├── templates/        # Templates HTML
+│   ├── app.py            # Fichier principal de l'application Flask
+│   ├── config.py         # Paramètres de configuration
+├── instance/
+│   ├── adapte_moi.sqlite # Base de données SQLite
+├── .github/              # Configuration GitHub Actions
+├── .vscode/              # Configuration de l'éditeur VS Code
+├── .gitignore            # Fichiers à ignorer par Git
+├── README.md             # Documentation du projet
 ├── requirements.txt      # Dépendances du projet
-└── README.md             # Documentation du projet
+├── run.py                # Point d'entrée de l'application
+├── test_db.py            # Script de test pour la base de données
 ```
 
+La structure de notre base de données : [MLD](app\statics\images\MLD_adapte_moi.pdf)
 ---
 
 ## Technologies utilisées 🛠️
