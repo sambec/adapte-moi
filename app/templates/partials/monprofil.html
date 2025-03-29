@@ -12,9 +12,9 @@
     </section>
 
     <section class="collection-section">
-        <h4 id="collection-title" ondblclick="makeEditable(this)">
+        <h3 id="collection-title" ondblclick="makeEditable(this)">
             {{ collection_name or 'Ma collection de films' }}
-        </h4>
+        </h3>
 
 
         {% if films %}
@@ -37,8 +37,8 @@
         {% if recommandation %}
         <div>
             <h3>Recommandation pour vous :</h3>
-            <p>Vous aimez bien le genre "{{ recommandation.genres }}". Vous aimerez aussi :</p>
-            <p>{{ recommandation.title }}</p>
+            <p>Vous aimez bien le genre <span class="film-genre">{{ recommandation.genres }}</span>. Vous aimerez aussi :</p>
+            <p><i>{{ recommandation.title }}</i></p>
             <span><a href="{{ url_for('ajouter_collection', film_id=recommandation.id) }}">(+)</a></span>
 
         </div>

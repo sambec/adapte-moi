@@ -16,6 +16,8 @@
             </div>
             </br>
             <div>
+             <!-- ici c'est pour gérer la navigation dans l'index -->
+
                 {% if books.has_prev %}
                     <a href="{{ url_for('list_books', page=books.prev_num) }}">Précédent</a>
                 {% endif %}

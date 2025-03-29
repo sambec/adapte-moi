@@ -11,11 +11,12 @@
                 <div class="list_films">
                     {% for film in films.items %}
                     
-                     
+                     <!-- si l'utilisateur est connecté on lui permet d'ajouter le film à sa collection -->
                         {% if current_user.is_authenticated %}
                         <p><i>{{ film.title }}</i>, réalisé par {{ film.director }} en {{ film.release_year.strftime('%Y') }}
                             <a href="{{ film.url_wikidata }}">{{ film.id_wikidata }}</a> <a href="/ajouter_collection/{{film.id}}">(+)</a></p>
                        
+                     <!-- sinon on le redirige vers la connection pour qu'il se connecte avant de pouvoir ajouter les films -->
 
                         {% else %}
                         <p><i>{{ film.title }}</i>, réalisé par {{ film.director }} en {{ film.release_year.strftime('%Y') }}
@@ -30,6 +31,8 @@
             </div>
             </br>
             <div>
+                <!-- ici c'est pour gérer la navigation dans l'index -->
+
                 {% if films.has_prev %}
                     <a href="{{ url_for('list_films', page=films.prev_num) }}">Précédent</a>
                 {% endif %}

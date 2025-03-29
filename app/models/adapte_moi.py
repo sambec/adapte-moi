@@ -55,4 +55,3 @@ class Collection(db.Model):
     film_title = db.Column(db.Text, nullable=False)
     film_genre = db.Column(db.Text, nullable=False)
     name = db.Column(db.String(100), nullable=True)
-    # film = db.relationship('Film', backref=db.backref('collections', lazy=True))

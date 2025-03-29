@@ -8,7 +8,6 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import io
 import numpy as np
-import random
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -16,6 +15,10 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+#////////////////////Pour la Connection////////////////////
+
+
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
@@ -63,6 +66,10 @@ def deconnexion():
         logout_user()
     flash("Vous êtes déconnecté", "info")
     return redirect(url_for("home"))
+
+#////////////////////Pour la recommandation dans la page MONRPOFIL selon les genres de la Collection////////////////////
+
+
 def get_recommendation(user_id):
     # Récupération des films de la collection de l'utilisateur
     films_dans_collection = (
@@ -92,6 +99,9 @@ def get_recommendation(user_id):
     )
 
     return recommended_film
+
+#////////////////////Pour la gestion de la Collection////////////////////
+
 @app.route('/profil')
 @app.route('/collection')
 @login_required
@@ -109,6 +119,10 @@ def afficher_collection():
     recommandation = get_recommendation(current_user.id)
 
     return render_template('partials/monprofil.html', films=films_dans_collection, collection_name=collection_name, recommandation=recommandation)
+
+#----------------Ajouter un film dans la collection---------------
+
+
 @app.route("/ajouter_collection/<string:film_id>")
 @login_required
 def ajouter_collection(film_id):
@@ -117,7 +131,7 @@ def ajouter_collection(film_id):
         return redirect(url_for('login'))
     
     film = Film.query.get(film_id)
-    
+
     existe_deja = Collection.query.filter_by(user_id=current_user.id, film_id=film.id).first()
     if existe_deja:
         flash(f'Le film "{film.title}" est déjà dans votre collection.', 'warning')
@@ -146,6 +160,9 @@ def ajouter_collection(film_id):
             flash('Film non trouvé.', 'error')
         return redirect(url_for('afficher_collection'))
 
+#----------------Renommer la collection---------------
+
+
 @app.route('/renommer_collection', methods=['POST'])
 @login_required
 def renommer_collection():
@@ -157,6 +174,9 @@ def renommer_collection():
         db.session.commit()
         return jsonify({'success': True})
     return jsonify({'success': False})
+
+#----------------Supprimer un film de la collection---------------
+
 
 @app.route('/supprimer_collection/<string:film_id>', methods=['POST'])
 @login_required
@@ -171,6 +191,15 @@ def supprimer_collection(film_id):
         flash('Film non trouvé dans votre collection.', 'error')
     return redirect(url_for('afficher_collection'))
 
+
+
+
+#////////////////////LES DATAVIZ de la page MONPROFIL////////////////////
+
+
+
+#----------------L'histogramme selon les genres dans la collection---------------
+
 @app.route('/genre_plot.png')
 @login_required
 def genre_plot_png():
@@ -183,6 +212,7 @@ def create_genre_figure(user_id):
     fig = Figure()
     axis = fig.add_subplot(1, 1, 1)
 
+    # Récupération des données depuis la base SQL
     films = (
         db.session.query(Film)
         .join(Collection, Film.id == Collection.film_id)
@@ -190,6 +220,7 @@ def create_genre_figure(user_id):
         .all()
     )
 
+    # Extraction des données pour les genres
     genres = [film.genres for film in films if film.genres]
     unique_genres = sorted(set(genres))
     counts = [genres.count(genre) for genre in unique_genres]
@@ -200,6 +231,8 @@ def create_genre_figure(user_id):
     axis.set_ylabel("Nombre de films")
 
     return fig
+
+#----------------Le graphique en radar selon les genres dans la collection---------------
 
 @app.route('/genre_radar.png')
 @login_required

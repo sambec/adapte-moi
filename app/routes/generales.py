@@ -1,19 +1,14 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort, jsonify
-from sqlalchemy import or_, select
-from ..models.adapte_moi import Film, Book, film_book
+from flask import render_template
+from ..models.adapte_moi import Film
 import io
 import random
-from flask import Flask, Response, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Response, render_template
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
-
 from wordcloud import WordCloud
 from flask_login import current_user
-
-# from ..models.formulaires import Recherche
 
 # GESTION ERREURS
 @app.errorhandler(404)
@@ -22,12 +17,9 @@ def page_not_found(error):
 
 # REDIRECTION ACCUEIL
 @app.route("/")
-@app.route("/index")
-@app.route("/index.html")
 @app.route("/accueil")
 @app.route("/home")
 def home():
-    # return app/statics/test.pyredirect(url_for("index"))
     if current_user.is_authenticated:
         print(f'Utilisateur {current_user.id} \({current_user.pseudo}\) est connecté.')
     else:
@@ -36,19 +28,26 @@ def home():
 
 @app.route("/about")
 def about():
-    # return app/statics/test.pyredirect(url_for("index"))
     return render_template("partials/about.html")
 
 @app.route("/adaptation")
 @app.route("/adaptation.html")
 def adaptation():
-    # return app/statics/test.pyredirect(url_for("index"))
     return render_template("partials/adaptation.html")
 
 @app.route("/top")
 @app.route("/top.html")
 def top():
     return render_template("partials/top.html")
+
+
+
+
+#////////////////////LES DATAVIZ de la page ADAPTATION////////////////////
+
+
+
+#----------------Le graphique pour les années de sorties des films de notre collection---------------
 
 # Route pour afficher le graphique
 @app.route('/plot.png')
@@ -80,8 +79,7 @@ def create_figure():
 
     return fig
 
-
-# -------------------- AUTHENTIFICATION --------------------
+#----------------Le nuage de mot pour les genres des films de notre collection---------------
 
 # 🎨 Définition des couleurs personnalisées
 COLOR_PALETTE = ["#EDA2A2", "#9AC9C1", "#FEEBB3", "#F28B66", "#4D7F96"]
