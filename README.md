@@ -146,8 +146,8 @@ SECRET_KEY=j6SscbFozFFp0muAcNmMPP8cNv1CcpEd
 │   ├── templates/        # Templates HTML
 │   ├── app.py            # Fichier principal de l'application Flask
 │   ├── config.py         # Paramètres de configuration
-├── instance/
-│   ├── adapte_moi.sqlite # Base de données SQLite
+|
+├── adapte_moi.sqlite     # Base de données SQLite
 ├── .github/              # Configuration GitHub Actions
 ├── .vscode/              # Configuration de l'éditeur VS Code
 ├── .gitignore            # Fichiers à ignorer par Git
