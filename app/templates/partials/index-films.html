@@ -13,16 +13,15 @@
                     
                      <!-- si l'utilisateur est connecté on lui permet d'ajouter le film à sa collection -->
                         {% if current_user.is_authenticated %}
-                        <p><i>{{ film.title }}</i>, réalisé par {{ film.director }} en {{ film.release_year.strftime('%Y') }}
+                        <p><i>{{ film.title }}</i>, réalisé par {{ film.director }} ({{film.release_year.strftime('%Y') if film.release_year else 'N/A'}})
                             <a href="{{ film.url_wikidata }}">{{ film.id_wikidata }}</a> <a href="/ajouter_collection/{{film.id}}">(+)</a></p>
                        
                      <!-- sinon on le redirige vers la connection pour qu'il se connecte avant de pouvoir ajouter les films -->
 
                         {% else %}
-                        <p><i>{{ film.title }}</i>, réalisé par {{ film.director }} en {{ film.release_year.strftime('%Y') }}
+                        <p><i>{{ film.title }}</i>, réalisé par {{ film.director }} ({{film.release_year.strftime('%Y') if film.release_year else 'N/A'}})
                             <a href="{{ film.url_wikidata }}">{{ film.id_wikidata }}</a><a href="{{ url_for('login') }}">(+)</a></p>
-
-                                
+    
                             
                         {% endif %}
                     
