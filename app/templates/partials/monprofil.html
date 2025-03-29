@@ -79,54 +79,5 @@
     }
 </script>
 
-<!-- tentative pour le graphique radar -->
-<!-- <script>
-    async function fetchRadarData() {
-        const userId = 1; // Remplace par l'ID utilisateur dynamique
-        const response = await fetch(`/user/${userId}/radar-data`);
-        const data = await response.json();
-
-        if (!data.labels.length) {
-            document.getElementById('radarChart').parentElement.innerHTML = '<p>Aucune donnée disponible pour le graphique.</p>';
-            return;
-        }
-
-        const ctx = document.getElementById('radarChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: data.labels,
-                datasets: [{
-                    label: 'Genres les plus regardés',
-                    data: data.data,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                animation: {
-                    duration: 2000,
-                    easing: 'easeInOutQuart'
-                },
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(200, 200, 200, 0.3)'
-                        },
-                        angleLines: {
-                            color: 'rgba(200, 200, 200, 0.5)'
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', fetchRadarData);
-</script> -->
 
 {% endblock %}

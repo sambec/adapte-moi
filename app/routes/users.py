@@ -132,6 +132,11 @@ def ajouter_collection(film_id):
     
     film = Film.query.get(film_id)
 
+    if not film:
+        flash('Film non trouvé.', 'error')
+        return redirect(url_for('afficher_collection'))
+
+    # Vérifier si le film est déjà dans la collection de l'utilisateur
     existe_deja = Collection.query.filter_by(user_id=current_user.id, film_id=film.id).first()
     if existe_deja:
         flash(f'Le film "{film.title}" est déjà dans votre collection.', 'warning')
@@ -146,19 +151,8 @@ def ajouter_collection(film_id):
         db.session.commit()
         flash(f'Film "{film.title}" ajouté à votre collection.', 'success')
 
-        if film:
-            nouvelle_collection = Collection(
-                user_id=current_user.id,
-                film_id=film.id,
-                film_title=film.title,
-                film_genre=film.genres
-            )
-            db.session.add(nouvelle_collection)
-            db.session.commit()
-            flash(f'Film "{film.title}" ajouté à votre collection.', 'success')
-        else:
-            flash('Film non trouvé.', 'error')
-        return redirect(url_for('afficher_collection'))
+    return redirect(url_for('afficher_collection'))
+
 
 #----------------Renommer la collection---------------
 

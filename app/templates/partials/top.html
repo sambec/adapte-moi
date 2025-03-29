@@ -10,17 +10,13 @@
         <div class="info-section">
         <div class="sparkles">✨✨✨✨✨</div>
         <center><h2 class="section-title">Partez à l'aventure !</h2></center>
-
         <div class="sparkles">✨✨✨✨✨</div>
-        <!-- <ul class="popular-list">
-            <li><a href="#">Livre 1</a></li>
-            <li><a href="#">Livre 2</a></li>
-            <li><a href="#">Livre 3</a></li> -->
+
             <div class="stat-box">
                 <p>Ce qu'on vous propose avec ce bouton, c'est de plonger dans nos collections, de prendre un livre au hasard et d'en découvrir les adaptations au cinéma !</p>
             </div>
             <div class="gif-container">
-
+            <!-- Ici on transforme le gif du monsieur qui ouvre la porte en bouton pour aléatoirement chercher un livre dans nos collections -->
               <img src="../../statics/images/book_door.gif" alt="Opening book door" class="clickable-gif" onclick="getRandomBook()">
               <script>
                 function getRandomBook() {
@@ -28,9 +24,9 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.error) {
-                                document.getElementById("random-book-result").innerHTML = "<p>No books found 😢</p>";
+                                document.getElementById("random-book-result").innerHTML = "<p>Pas de livre trouvé 😢</p>";
                             } else {
-                                // Create a clickable link to /book_to_film/<book_id>
+                                // créer un lien cliquable vers /book_to_film/<book_id>
                                 document.getElementById("random-book-result").innerHTML = `
                                     <p>
                                         <strong>
@@ -50,7 +46,7 @@
                 </script>
                 
                 
-<!-- This is where the book result will be displayed -->
+<!-- Pour afficher le résulat du livre tiré au hasard -->
 <div id="random-book-result" class="result-box">
 
 </div>

@@ -583,3 +583,15 @@ img:hover {
         color: #F28B66;
         font-weight: bold;
     }
+
+    .container-profile-sep{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .profile-sep{
+        width: 40%; 
+        background-color:#9AC9C1; 
+        height: 2px;
+    }
