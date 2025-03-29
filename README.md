@@ -53,7 +53,7 @@ Suivez ces étapes pour configurer le projet en local :
    ```
 2. **Créez un environnement virtuel :**
    ```bash
-   python3 -m venv venv
+   python3 -m venv venv # Ou virtualenv env -p python3
    ```
 3. **Activer l'environnement virtuel :**
    ```bash
