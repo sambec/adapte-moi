@@ -63,6 +63,11 @@ Suivez ces étapes pour configurer le projet en local :
    ```bash
    pip install -r requirements.txt
    ```
+   > Vous rencontrez un problème relatif à mysql ? Essayez :
+   ```
+   sudo apt-get update
+   sudo apt-get install libmysqlclient-dev
+   ```
 5. **Configurez l'environnement :**
    ```bash
    créer un fichier .env à côté de run.py
