@@ -7,6 +7,8 @@ tmp/
 
 .env
 
+.vscode
+
 
 # C extensions 
 *.so
