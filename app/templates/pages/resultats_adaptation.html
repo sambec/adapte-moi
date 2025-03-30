@@ -15,6 +15,9 @@
             <a href="{{ url_for('login') }}">Se connecter</a>
             {% endif %}
         </button>
+        {% if current_user.is_authenticated %}
+            <button type="button" class="btn btn-primary profil">Profil</button>
+        {% endif %}
         <div class="container">
             <h1 class="logo"><center><a href="{{ url_for('home') }}">🎥 Adapte-moi si tu peux ! 📚</a></center></h1>
             <nav class="nav">
